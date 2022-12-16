@@ -1,6 +1,11 @@
 // A class to create todo-tasks.
 
 class Task {
+  date;
+  project;
+  priority;
+  completion;
+
   constructor(name) {
     this.name = name;
   }
@@ -15,5 +20,9 @@ class Task {
 
   set isImportant(priorityTag) {
     return (this.priority = priorityTag);
+  }
+
+  set isCompleted(answer) {
+    return (this.completion = answer);
   }
 }
