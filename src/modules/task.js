@@ -1,28 +1,28 @@
 // A class to create todo-tasks.
 
 class Task {
-  date;
-  project;
-  priority;
-  completion;
+  #date;
+  #project;
+  #priority;
+  #completion;
 
   constructor(name) {
     this.name = name;
   }
 
   set isDueUntil(dueDate) {
-    return (this.date = dueDate);
+    return (this.#date = dueDate);
   }
 
   set isForProject(projectName) {
-    return (this.project = projectName);
+    return (this.#project = projectName);
   }
 
-  set isImportant(priorityTag) {
-    return (this.priority = priorityTag);
+  set isImportant(boolean) {
+    return (this.#priority = boolean);
   }
 
   set isCompleted(answer) {
-    return (this.completion = answer);
+    return (this.#completion = answer);
   }
 }
