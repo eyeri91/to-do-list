@@ -1,28 +1,59 @@
 // A class to create todo-tasks.
 
-class Task {
+export default class Task {
+  #title;
   #date;
   #project;
   #priority;
   #completion;
 
-  constructor(name) {
-    this.name = name;
+  constructor(title) {
+    this.#title = title;
   }
 
-  set isDueUntil(dueDate) {
+  setTitle(newTitle) {
+    this.#title = newTitle;
+  }
+
+  getTitle() {
+    return this.#title;
+  }
+
+  setDueDate(dueDate) {
     return (this.#date = dueDate);
   }
 
-  set isForProject(projectName) {
+  getDueDate() {
+    return this.#date;
+  }
+
+  setForWhichProject(projectName) {
     return (this.#project = projectName);
   }
 
-  set isImportant(boolean) {
+  getWhichProjectFor() {
+    return this.#project;
+  }
+
+  setPriority(boolean) {
     return (this.#priority = boolean);
   }
 
-  set isCompleted(answer) {
+  getPriority() {
+    return this.#priority;
+  }
+
+  setCompletionStatus(answer) {
     return (this.#completion = answer);
   }
+
+  getCompletionStatus() {
+    return this.#completion;
+  }
 }
+
+// const newTask = new Task("Bibimbab");
+
+// newTask.setDueDate("today");
+
+// console.log(newTask);
