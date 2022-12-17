@@ -7,6 +7,6 @@ export default class Task {
     this.title = toSentenceCase(title);
     this.dueDate = dueDate;
     this.projectCategory = projectCategory;
-    (this.priority = false), (this.completionStatus = false);
+    (this.isImportant = false), (this.isCompleted = false);
   }
 }
