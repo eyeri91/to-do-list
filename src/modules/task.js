@@ -2,7 +2,7 @@
 
 export default class Task {
   #title;
-  #date;
+  #dueDate;
   #project;
   #priority;
   #completion;
@@ -20,11 +20,11 @@ export default class Task {
   }
 
   setDueDate(dueDate) {
-    return (this.#date = dueDate);
+    return (this.#dueDate = dueDate);
   }
 
-  getDueDate() {
-    return this.#date;
+  getDuedate() {
+    return this.#dueDate;
   }
 
   setForWhichProject(projectName) {
@@ -51,9 +51,3 @@ export default class Task {
     return this.#completion;
   }
 }
-
-// const newTask = new Task("Bibimbab");
-
-// newTask.setDueDate("today");
-
-// console.log(newTask);
