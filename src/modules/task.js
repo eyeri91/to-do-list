@@ -5,7 +5,7 @@ export default class Task {
   #dueDate;
   #projectCategory;
   #priority;
-  #completion;
+  #completionStatus;
 
   constructor(title) {
     this.#title = title;
@@ -44,10 +44,10 @@ export default class Task {
   }
 
   setCompletionStatus(answer) {
-    return (this.#completion = answer);
+    return (this.#completionStatus = answer);
   }
 
   getCompletionStatus() {
-    return this.#completion;
+    return this.#completionStatus;
   }
 }
