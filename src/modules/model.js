@@ -1,5 +1,3 @@
-<<<<<<< Updated upstream
-=======
 import Task from "./task.js";
 import Project from "./project.js";
 
@@ -29,4 +27,3 @@ const returnTasks =
 
 // const returnTodayTask = returnTasks(personal);
 // const todayTaskFromPersonal = returnTodayTask(date);
->>>>>>> Stashed changes
