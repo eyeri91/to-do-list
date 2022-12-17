@@ -1,7 +1,8 @@
+import { toSentenceCase } from "../utils/utils.js";
 export default class Project {
   #tasks;
   constructor(title) {
-    this.title = title;
+    this.title = toSentenceCase(title);
     this.#tasks = [];
   }
 
