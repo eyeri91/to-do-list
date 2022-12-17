@@ -3,7 +3,7 @@
 export default class Task {
   #title;
   #dueDate;
-  #project;
+  #projectCategory;
   #priority;
   #completion;
 
@@ -28,11 +28,11 @@ export default class Task {
   }
 
   setForWhichProject(projectName) {
-    return (this.#project = projectName);
+    return (this.#projectCategory = projectName);
   }
 
   getWhichProjectFor() {
-    return this.#project;
+    return this.#projectCategory;
   }
 
   setPriority(boolean) {
