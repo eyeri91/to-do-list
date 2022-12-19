@@ -1,3 +1,5 @@
+// import * as bootstrap from "bootstrap";
+
 export class View {
   constructor(taskListContainer, sideBar) {
     this.taskListContainer = taskListContainer;
