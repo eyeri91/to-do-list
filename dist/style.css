@@ -1,0 +1,11 @@
+@media screen and (min-width: 768px) {
+  .container,
+  .container > .navbar-collapse .navbar-nav {
+    flex-direction: column;
+  }
+
+  .sidebar > .navbar {
+    width: 20%;
+    height: 100vh;
+  }
+}
