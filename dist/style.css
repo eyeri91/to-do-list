@@ -6,10 +6,11 @@
   main > .navbar {
     width: 25%;
     max-width: 230px;
+    min-width: fit-content;
     height: 100vh;
   }
 
-  .nav-category-container > * {
-    margin-bottom: 2rem;
+  .navbar-nav {
+    margin-bottom: 1rem;
   }
 }

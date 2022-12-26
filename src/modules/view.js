@@ -1,16 +1,17 @@
 // import * as bootstrap from "bootstrap";
-
+import { createElement } from "../utils/utils.js";
 export class View {
-  constructor(taskListContainer, sideBar) {
-    this.taskListContainer = taskListContainer;
-    this.sideBar = sideBar;
+  #taskContainer;
+  constructor(taskContainer) {
+    this.#taskContainer = taskContainer;
   }
 
   // Function to update taskListContainer with chose list
   // Function to add and remove project to the sideBar
 
   renderStartPage() {
-    // renderPage
+    // const buttonToAddNewTask = createElement("button", "+");
+    // this.#taskContainer.append(buttonToAddNewTask);
   }
 
   renderProjectList() {}
@@ -30,4 +31,7 @@ export class View {
   togglePriority() {}
 
   updateProjectCategory() {}
+
+  // When screen is less than medium and the burger icon is collpased,
+  // Then add those 2 buttons for Home and Projects
 }

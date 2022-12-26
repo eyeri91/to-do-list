@@ -3,7 +3,7 @@ export function toSentenceCase(string) {
 }
 
 export function createElement(elementType, elementText) {
-  const element = createElement(elementType);
-  if (elementText) element.textCotent = elementText;
+  const element = document.createElement(elementType);
+  if (elementText) element.textContent = elementText;
   return element;
 }

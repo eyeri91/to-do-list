@@ -24,7 +24,15 @@
       <nav class="navbar navbar-expand-md bg-light ps-md-4 px-3 col-md-3">
         <div class="container-fluid">
           <div class="nav-category-container flex-nowrap">
-            <a class="navbar-brand home-category">Home</a>
+            <div class="home-category flex-nowrap">
+              <a class="navbar-brand fs-3">Home </a>
+              <button
+                type="button"
+                class="btn btn-md btn-primary rounded-5 create-task-button d-none d-md-inline"
+              >
+                +
+              </button>
+            </div>
             <div class="collapse navbar-collapse mb-4" id="navbarNavAltMarkup">
               <div class="navbar-nav">
                 <a class="nav-link active" aria-current="page" href="#"
@@ -34,7 +42,15 @@
                 <a class="nav-link" href="#">This Week</a>
               </div>
             </div>
-            <a class="navbar-brand project-category">Projects</a>
+            <div class="projects-category flex">
+              <a class="navbar-brand project-category fs-3">Projects</a>
+              <button
+                type="button"
+                class="btn btn-md btn-primary rounded-5 create-project-button d-none d-md-inline"
+              >
+                +
+              </button>
+            </div>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
               <div class="navbar-nav">
                 <a class="nav-link active" aria-current="page" href="#"
@@ -58,7 +74,7 @@
           </button>
         </div>
       </nav>
-      <div id="list-container" class="col-md-9">list</div>
+      <div id="task-container" class="col-md-9"></div>
     </main>
     <footer></footer>
   </body>
