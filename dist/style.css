@@ -1,11 +1,15 @@
 @media screen and (min-width: 768px) {
-  .container,
-  .container > .navbar-collapse .navbar-nav {
+  .nav-category-container,
+  .nav-category-container > .navbar-collapse .navbar-nav {
     flex-direction: column;
   }
-
-  .sidebar > .navbar {
-    width: 20%;
+  main > .navbar {
+    width: 25%;
+    max-width: 230px;
     height: 100vh;
+  }
+
+  .nav-category-container > * {
+    margin-bottom: 2rem;
   }
 }

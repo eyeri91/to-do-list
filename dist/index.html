@@ -20,13 +20,12 @@
         <span class="navbar-brand mb-0 fs-1 py-4 me-4">Your checklist</span>
       </nav>
     </header>
-    <nav class="sidebar">
-      <nav class="navbar navbar-expand-md flex bg-light">
-        <div class="container-fluid flex-nowrap">
-          <div class="container">
-            <a class="navbar-brand">Home</a>
-
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <main class="row">
+      <nav class="navbar navbar-expand-md bg-light ps-md-4 px-3 col-md-3">
+        <div class="container-fluid">
+          <div class="nav-category-container flex-nowrap">
+            <a class="navbar-brand home-category">Home</a>
+            <div class="collapse navbar-collapse mb-4" id="navbarNavAltMarkup">
               <div class="navbar-nav">
                 <a class="nav-link active" aria-current="page" href="#"
                   >All tasks</a
@@ -35,7 +34,7 @@
                 <a class="nav-link" href="#">This Week</a>
               </div>
             </div>
-            <a class="navbar-brand">Projects</a>
+            <a class="navbar-brand project-category">Projects</a>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
               <div class="navbar-nav">
                 <a class="nav-link active" aria-current="page" href="#"
@@ -59,9 +58,7 @@
           </button>
         </div>
       </nav>
-    </nav>
-    <main>
-      <div id="list-container "></div>
+      <div id="list-container" class="col-md-9">list</div>
     </main>
     <footer></footer>
   </body>
