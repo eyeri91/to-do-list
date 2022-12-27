@@ -9,7 +9,9 @@ personal.addTask(newTask);
 console.log(personal.getAllTasks());
 
 class toDoList {
-  constructor() {}
+  constructor(listContainer) {
+    this.appContainer = listContainer;
+  }
 }
 
 // A function to return all tasks regardless of projects

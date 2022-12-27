@@ -1,0 +1,16 @@
+@media screen and (min-width: 768px) {
+  .nav-category-container,
+  .nav-category-container > .navbar-collapse .navbar-nav {
+    flex-direction: column;
+  }
+  main > .navbar {
+    width: 25%;
+    max-width: 230px;
+    min-width: fit-content;
+    height: 100vh;
+  }
+
+  .navbar-nav {
+    margin-bottom: 1rem;
+  }
+}
