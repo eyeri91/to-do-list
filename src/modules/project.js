@@ -12,13 +12,13 @@ export default class Project {
 
   deleteTask(taskToBeDeleted) {
     this.#tasks = this.#tasks.filter(
-      (task) => task.getTitle() !== taskToBeDeleted.getTitle()
+      (task) => task.title !== taskToBeDeleted.title
     );
   }
 
   getTask(taskToBeFound) {
     const foundTask = this.#tasks.find(
-      (task) => task.getTitle() === taskToBeFound.getTtitle()
+      (task) => task.title === taskToBeFound.title
     );
   }
 
