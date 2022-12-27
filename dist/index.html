@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <header>
+    <header class="h-auto">
       <nav class="navbar navbar-light bg-light d-flex justify-content-end">
         <span class="navbar-brand mb-0 fs-1 py-4 me-4">Your checklist</span>
       </nav>
@@ -42,17 +42,20 @@
                 <a class="nav-link" href="#">This Week</a>
               </div>
             </div>
-            <div class="projects-category flex">
-              <a class="navbar-brand project-category fs-3">Projects</a>
-              <button
-                type="button"
-                class="btn btn-md btn-primary rounded-5 create-project-button d-none d-md-inline"
-              >
-                +
-              </button>
-            </div>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-              <div class="navbar-nav">
+            <div
+              class="collapse navbar-collapse d-md-flex flex-md-column"
+              id="navbarNavAltMarkup"
+            >
+              <div class="projects-category flex-nowrap">
+                <a class="navbar-brand project-category fs-3">Projects</a>
+                <button
+                  type="button"
+                  class="btn btn-md btn-primary rounded-5 create-project-button d-none d-md-inline"
+                >
+                  +
+                </button>
+              </div>
+              <div class="navbar-nav align-self-start">
                 <a class="nav-link active" aria-current="page" href="#"
                   >Personal</a
                 >
@@ -74,7 +77,67 @@
           </button>
         </div>
       </nav>
-      <div id="task-container" class="col-md-9"></div>
+      <div
+        id="task-container"
+        class="container col-md-9 d-flex flex-column justify-content-center align-items-center w-75"
+      >
+        <div class="btn-group align-self-start w-25">
+          <button
+            type="button"
+            class="btn btn-md dropdown-toggle border-0"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            All tasks
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">All tasks</a></li>
+            <li><a class="dropdown-item" href="#">Today</a></li>
+            <li><a class="dropdown-item" href="#">This Week</a></li>
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
+            <li><a class="dropdown-item" href="#">Personal</a></li>
+          </ul>
+        </div>
+
+        <div class="list-group list-group-flush w-75">
+          <!-- For basic task -->
+          <a
+            href="#"
+            class="list-group-item list-group-item-action list-group-item-light"
+            ><input
+              class="form-check-input me-1"
+              type="checkbox"
+              value=""
+              id="checkboxStretched"
+            />
+            <label
+              class="form-check-label stretched-link"
+              for="checkboxStretched"
+              >A simple light list group item</label
+            ></a
+          >
+          <!-- For every second line -->
+          <a
+            href="#"
+            class="list-group-item list-group-item-action list-group-item-secondary"
+            >A simple secondary list group item</a
+          >
+          <!-- Completed -->
+          <a
+            href="#"
+            class="list-group-item list-group-item-action list-group-item-success"
+            >A simple success list group item</a
+          >
+          <!-- Important -->
+          <a
+            href="#"
+            class="list-group-item list-group-item-action list-group-item-warning"
+            >A simple warning list group item</a
+          >
+        </div>
+      </div>
     </main>
     <footer></footer>
   </body>

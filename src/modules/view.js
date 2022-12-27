@@ -10,11 +10,16 @@ export class View {
   // Function to add and remove project to the sideBar
 
   renderStartPage() {
+    // if(list) this.renderEmptyList()
     // const buttonToAddNewTask = createElement("button", "+");
     // this.#taskContainer.append(buttonToAddNewTask);
   }
 
   renderProjectList() {}
+
+  renderEmptyList() {
+    // If no tasks are promised, The list is empty!
+  }
 
   addNewProject() {}
 
