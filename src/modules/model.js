@@ -2,17 +2,18 @@ import Task from "./task.js";
 import Project from "./project.js";
 import { toSentenceCase } from "../utils/utils.js";
 
-const defaultTask = new Task("study JS hard", "no date", "Personal");
+// const defaultTask = new Task("study JS hard", "no date", "Personal");
+const personalProject = new Project("Personal");
+
 export class Model {
   #projects;
   #publishReleaseTasksForChosenCategory;
   constructor(publishReleaseTasksForChosenCategory) {
     this.#projects = [];
-    const personalProject = this.addNewProject("Personal");
+    this.#projects.push(personalProject);
     this.#publishReleaseTasksForChosenCategory =
       publishReleaseTasksForChosenCategory;
   }
-
   // create default projects and add it to projectList
   addNewProject(projectTitle) {
     if (!this.#projects[projectTitle]) {
@@ -31,21 +32,26 @@ export class Model {
     for (const project of this.#projects) {
       if (project.title === task.projectCategory) project.addTask(task);
       else {
-        console.log("Test1");
-        // this.personalProject.addTask(task);
+        alert("There is no project category found");
       }
     }
   }
 
-  removeTask() {}
+  removeTask(task) {
+    for (const project of this.#projects) {
+      if (task.projectCategory === project.title) project.deleteTask(task);
+      else alert("There is no project category found ");
+    }
+  }
 
   collectTasksForChosenCategory() {
     this.#publishReleaseTasksForChosenCategory(data);
   }
 
-  print() {
-    console.log(personalProject);
-  }
+  // print() {
+  //   console.log(this.#projects);
+  //   console.log(this.#projects[0].tasks);
+  // }
 }
 
 // A function to save tasks to localStorage
@@ -59,8 +65,8 @@ const returnTasks =
 // const returnTodayTask = returnTasks(personal);
 // const todayTaskFromPersonal = returnTodayTask(date);
 
-const myModel = new Model("n");
+// const myModel = new Model("n");
 
-myModel.addTask(defaultTask);
-myModel.print();
+// myModel.addTask(defaultTask);
+// myModel.print();
 // personalProject is undefined as it is not targeting the correct instance of a project.

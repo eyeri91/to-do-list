@@ -1,30 +1,30 @@
 import { toSentenceCase } from "../utils/utils.js";
 export default class Project {
-  #tasks;
+  tasks;
   constructor(title) {
     this.title = toSentenceCase(title);
-    this.#tasks = [];
+    this.tasks = [];
   }
 
   addTask(newTask) {
-    this.#tasks.push(newTask);
+    this.tasks.push(newTask);
   }
 
   deleteTask(taskToBeDeleted) {
-    this.#tasks = this.#tasks.filter(
+    this.tasks = this.tasks.filter(
       (task) => task.title !== taskToBeDeleted.title
     );
   }
 
   getTask(taskToBeFound) {
-    const foundTask = this.#tasks.find(
+    const foundTask = this.tasks.find(
       (task) => task.title === taskToBeFound.title
     );
   }
 
   getAllTasks() {
-    if (this.#tasks) {
-      return this.#tasks;
+    if (this.tasks) {
+      return this.tasks;
     }
   }
 

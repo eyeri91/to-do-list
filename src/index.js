@@ -4,4 +4,4 @@ const taskContainer = document.getElementById("task-container");
 
 const view = new View(taskContainer);
 
-view.renderStartPage();
+// view.renderStartPage();

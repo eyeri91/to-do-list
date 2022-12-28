@@ -48,12 +48,12 @@ export class Controller {
       (data) => this.#eventManager.publish("removeTask", data),
       (data) => this.#eventManager.publish("selectTaskCategory", data)
     );
-    this.#model = new Model((data) =>
-      this.#eventManager.publish("releaseTasksForChosenCategory", data)
-    );
   }
 
   init() {
+    this.#model = new Model((data) =>
+      this.#eventManager.publish("releaseTasksForChosenCategory", data)
+    );
     this.#view.renderStartPage();
   }
 }
