@@ -70,16 +70,25 @@ export class View {
     dropdownMenuList.classList.add("dropdown-menu");
 
     // Dropdown menu list
-    this.#MakeDropdownListItems(homeTaskMenuList, dropdownMenuList);
-    this.#MakeDropdownListItems(this.projectTitleList, dropdownMenuList);
+    this.#MakeDropdownListItemsAndAppend(homeTaskMenuList, dropdownMenuList);
+    this.#MakeDropdownListItemsAndAppend(
+      this.projectTitleList,
+      dropdownMenuList
+    );
 
-    // I should have a project name list array for view and model so that when a new project is added
-    // It updates the navbar.
+    // Make list Group
+    const listGroupContainer = createElement("div");
+    this.#taskContainer.append(listGroupContainer);
+
+    // this.#makeTaskListAndAppend(tasks, listGroupContainer);
   }
 
-  #MakeDropdownListItems(list, parentElement) {
+  #MakeDropdownListItemsAndAppend(list, parentElement) {
     for (const item of list) {
       const li = createElement("li");
+      if (list === projectTitleList) {
+        li.classList.add(item.toLowerCase());
+      }
       const a = createElement("a", item);
       a.classList.add("dropdown-item");
       a.setAttribute("href", "#");
@@ -95,6 +104,11 @@ export class View {
     }
 
     // It should update new and removed project name too.
+  }
+
+  #makeTaskListAndAppend(tasks, parentElement) {
+    // List group container
+    // Mak
   }
 
   renderProjectList() {}
