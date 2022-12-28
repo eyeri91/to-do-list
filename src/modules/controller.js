@@ -8,6 +8,10 @@ export class Controller {
   #eventManager;
   constructor(taskContainer) {
     this.#eventManager = new EventManager();
+
+    this.#eventManager.subscribe("returnAllTasks", (data) =>
+      this.#view.renderStartPage(data)
+    );
     this.#eventManager.subscribe(
       "addProject",
       (data) => this.#view.addNewProject(data),
@@ -51,10 +55,12 @@ export class Controller {
   }
 
   init() {
-    this.#model = new Model((data) =>
-      this.#eventManager.publish("releaseTasksForChosenCategory", data)
+    this.#model = new Model(
+      (data) => this.#eventManager.publish("returnAllTasks", data),
+      (data) =>
+        this.#eventManager.publish("releaseTasksForChosenCategory", data)
     );
-    this.#view.renderStartPage();
+    this.#model.collectTasksForChosenCategory();
   }
 }
 

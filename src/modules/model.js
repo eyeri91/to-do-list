@@ -1,18 +1,25 @@
 import Task from "./task.js";
 import Project from "./project.js";
-import { toSentenceCase } from "../utils/utils.js";
+// import { toSentenceCase } from "../utils/utils.js";
 
-// const defaultTask = new Task("study JS hard", "no date", "Personal");
+const defaultTask = new Task("Finish TypeScript course", "No date", "Personal");
+const defaultTask2 = new Task("sds", "No date", "Personal");
 const personalProject = new Project("Personal");
-
+personalProject.addTask(defaultTask);
+personalProject.addTask(defaultTask2);
 export class Model {
   #projects;
-  #publishReleaseTasksForChosenCategory;
-  constructor(publishReleaseTasksForChosenCategory) {
+  #publishReturnAllTasksEvent;
+  #publishReleaseTasksForChosenCategoryEvent;
+  constructor(
+    publishReturnAllTasksEvent,
+    publishReleaseTasksForChosenCategoryEvent
+  ) {
     this.#projects = [];
     this.#projects.push(personalProject);
-    this.#publishReleaseTasksForChosenCategory =
-      publishReleaseTasksForChosenCategory;
+    this.#publishReturnAllTasksEvent = publishReturnAllTasksEvent;
+    this.#publishReleaseTasksForChosenCategoryEvent =
+      publishReleaseTasksForChosenCategoryEvent;
   }
   // create default projects and add it to projectList
   addNewProject(projectTitle) {
@@ -44,8 +51,27 @@ export class Model {
     }
   }
 
-  collectTasksForChosenCategory() {
-    this.#publishReleaseTasksForChosenCategory(data);
+  collectTasksForChosenProjectName(projectName) {
+    if (!projectName) {
+      const allTasksFromEveryProject = [];
+      for (const project of this.#projects) {
+        const allTasks = project.getAllTasks();
+        allTasksFromEveryProject.push(allTasks);
+      }
+      this.#publishReturnAllTasksEvent(allTasksFromEveryProject);
+      return;
+    } else {
+      const allTasksFromChosenProejct = [];
+      for (const project of this.#projects) {
+        if (project.title === projectName) {
+          const allTasksOfThisCategory = project.getAllTasks();
+          allTasksFromChosenProejct.push(allTasksOfThisCategory);
+        }
+      }
+      this.#publishReleaseTasksForChosenCategoryEvent(
+        allTasksFromChosenProejct
+      );
+    }
   }
 
   // print() {

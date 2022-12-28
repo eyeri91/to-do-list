@@ -4,11 +4,11 @@ export class EventManager {
     this.#events = {};
   }
 
-  subscribe(eventName, subscribers) {
-    if (this.#events[eventName]) {
-      this.#events[eventName] = subscribers;
+  subscribe(eventName, subscriber) {
+    if (!this.#events[eventName]) {
+      this.#events[eventName] = [subscriber];
     } else {
-      this.#events[eventName].push(subscribers);
+      this.#events[eventName].push(subscriber);
     }
   }
 
@@ -17,3 +17,10 @@ export class EventManager {
     for (const subscriber of subscribers) subscriber(data);
   }
 }
+
+// publish(eventName, data) {
+//   const subscribers = this.#events[eventName];
+//   for (const subscriber of subscribers) {
+//     subscriber(data);
+//   }
+// }
