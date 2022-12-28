@@ -17,10 +17,3 @@ export class EventManager {
     for (const subscriber of subscribers) subscriber(data);
   }
 }
-
-// publish(eventName, data) {
-//   const subscribers = this.#events[eventName];
-//   for (const subscriber of subscribers) {
-//     subscriber(data);
-//   }
-// }

@@ -60,7 +60,7 @@ export class Controller {
       (data) =>
         this.#eventManager.publish("releaseTasksForChosenCategory", data)
     );
-    this.#model.collectTasksForChosenCategory();
+    this.#model.collectTasksForChosenProjectName();
   }
 }
 

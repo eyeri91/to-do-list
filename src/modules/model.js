@@ -7,6 +7,7 @@ const defaultTask2 = new Task("sds", "No date", "Personal");
 const personalProject = new Project("Personal");
 personalProject.addTask(defaultTask);
 personalProject.addTask(defaultTask2);
+
 export class Model {
   #projects;
   #publishReturnAllTasksEvent;

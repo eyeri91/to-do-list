@@ -1,7 +1,8 @@
 // import * as bootstrap from "bootstrap";
 import { createElement } from "../utils/utils.js";
 
-let projectTitleList = [];
+const homeTaskMenuList = ["All tasks", "Today", "This week"];
+let projectTitleList = ["Personal"];
 export class View {
   #taskContainer;
   #publishAddProjectEvent;
@@ -9,7 +10,7 @@ export class View {
   #publishAddTaskEvent;
   #publishRemoveTaskEvent;
   #publishSelectTaskCategory;
-  #projectTitleList;
+  projectTitleList;
   constructor(
     taskContainer,
     publishAddProjectEvent,
@@ -24,6 +25,7 @@ export class View {
     this.#publishAddTaskEvent = publishAddTaskEvent;
     this.#publishRemoveTaskEvent = publishRemoveTaskEvent;
     this.#publishSelectTaskCategory = publishSelectTaskCategory;
+    this.projectTitleList;
   }
 
   // Function to update taskListContainer with chose list
@@ -31,7 +33,7 @@ export class View {
 
   renderStartPage(allPreviousTasks) {
     if (!allPreviousTasks) this.renderEmptyListPage();
-    this.renderTaskList();
+    this.#renderTaskList(projectTitleList);
     // allPreviousTasks itself is an array containing eacy project array
     // To access each project use [] index
     // To access task of each project, use [][] index
@@ -45,8 +47,13 @@ export class View {
     // 3.
   }
 
-  renderTaskList(projectsTitleList) {
+  #renderTaskList(projectTitleList) {
+    this.projectTitleList = projectTitleList;
+    // Dropdown menu container
     const dropdownContainer = createElement("div");
+    dropdownContainer.classList.add("btn-group", "align-self-start", "w-25");
+    this.#taskContainer.append(dropdownContainer);
+    // Dropdown button
     const dropdownButton = createElement("button", "All tasks");
     dropdownContainer.append(dropdownButton);
     dropdownButton.type = "button";
@@ -62,8 +69,32 @@ export class View {
     dropdownContainer.append(dropdownMenuList);
     dropdownMenuList.classList.add("dropdown-menu");
 
+    // Dropdown menu list
+    this.#MakeDropdownListItems(homeTaskMenuList, dropdownMenuList);
+    this.#MakeDropdownListItems(this.projectTitleList, dropdownMenuList);
+
     // I should have a project name list array for view and model so that when a new project is added
     // It updates the navbar.
+  }
+
+  #MakeDropdownListItems(list, parentElement) {
+    for (const item of list) {
+      const li = createElement("li");
+      const a = createElement("a", item);
+      a.classList.add("dropdown-item");
+      a.setAttribute("href", "#");
+      li.append(a);
+      parentElement.append(li);
+    }
+    if (list === homeTaskMenuList) {
+      const li = createElement("li");
+      const hr = createElement("hr");
+      hr.classList.add("dropdown-divider");
+      li.append(hr);
+      parentElement.append(li);
+    }
+
+    // It should update new and removed project name too.
   }
 
   renderProjectList() {}
@@ -75,13 +106,18 @@ export class View {
     // OpenNewTaskModal();
   }
 
-  addNewProject() {
-    this.#publishAddProjectEvent(newProjectTitle);
+  addNewProject(newProject) {
+    this.#publishAddProjectEvent(newProject.title);
+    this.projectTitleList.push(newProject.title);
+
     // a function to update a project title list array in view.
   }
 
-  removeProject() {
-    this.#publishRemoveProjectEvent(projectTitle);
+  removeProject(projectToBeRemoved) {
+    this.#publishRemoveProjectEvent(projectToBeRemoved.title);
+    this.projectTitleList = this.projectTitleList.filter(
+      (project) => project.title !== projectToBeRemoved.title
+    );
     // a function to update a project title list array in view.
   }
 
