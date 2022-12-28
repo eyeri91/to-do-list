@@ -6,7 +6,7 @@ export default class Task {
   constructor(title, dueDate, projectCategory = "Personal") {
     this.title = toSentenceCase(title);
     this.dueDate = dueDate;
-    this.projectCategory = projectCategory;
+    this.projectCategory = toSentenceCase(projectCategory);
     (this.isImportant = false), (this.isCompleted = false);
   }
 }

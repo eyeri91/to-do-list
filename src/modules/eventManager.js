@@ -1,7 +1,7 @@
 export class EventManager {
   #events;
   constructor() {
-    this.#events = [];
+    this.#events = {};
   }
 
   subscribe(eventName, subscribers) {

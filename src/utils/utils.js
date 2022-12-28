@@ -1,5 +1,5 @@
 export function toSentenceCase(string) {
-  return string[0].toUpperCase() + string[0].slice(1);
+  return string[0].toUpperCase() + string.slice(1);
 }
 
 export function createElement(elementType, elementText) {
