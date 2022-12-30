@@ -106,30 +106,37 @@ export class View {
     }
   }
 
-  #makeListGroupContainer(tasks) {
+  #makeListGroupContainer(arrayOfProjects) {
     // Make list Group
     const listGroupContainer = createElement("div");
     listGroupContainer.classList.add("list-group", "list-group-flush", "w-75");
     this.#taskContainer.append(listGroupContainer);
 
-    const numberOfProjects = tasks.length;
+    const numberOfProjects = arrayOfProjects.length;
     for (let i = 0; i < numberOfProjects; i++) {
-      for (const task of tasks[i]) {
+      const arrayOfTasksFromProject = arrayOfProjects[i];
+      for (const task of arrayOfTasksFromProject) {
+        const indexOfTask = arrayOfTasksFromProject.indexOf(task);
         // Need a method to change the color of list depending on listnumber
-        const taskItem = this.#addTaskItemsToListGroupContainer(task);
+        const taskItem = this.#addTaskItemsToListGroupContainer(
+          task,
+          indexOfTask
+        );
         listGroupContainer.append(taskItem);
       }
     }
   }
 
-  #addTaskItemsToListGroupContainer(task) {
+  #addTaskItemsToListGroupContainer(task, indexOfTask) {
     const aElement = createElement("a");
     aElement.setAttribute("href", "#");
-    aElement.classList.add(
-      "list-group-item",
-      "list-group-item-action",
-      "list-group-item-light"
-    );
+    aElement.classList.add("list-group-item", "list-group-item-action");
+
+    indexOfTask / 2 !== 0
+      ? aElement.classList.add(taskStatus.evenNumberedTask)
+      : aElement.classList.add(taskStatus.oddNumberedTask);
+
+    // this.toggleImportantTask();
 
     const formInput = createElement("input");
     formInput.classList.add("form-check-input", "me-1");
@@ -144,6 +151,10 @@ export class View {
     aElement.append(formLabel);
 
     return aElement;
+  }
+
+  toggleImportantTask() {
+    //  change the color of task list item when its status changes
   }
 
   renderEmptyListPage() {
@@ -177,8 +188,6 @@ export class View {
   }
 
   editTaskDetails() {}
-
-  togglePriority() {}
 
   updateListByProjectCategory() {}
 
