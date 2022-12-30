@@ -3,6 +3,13 @@ import { createElement } from "../utils/utils.js";
 
 const homeTaskMenuList = ["All tasks", "Today", "This week"];
 let projectTitleList = ["Personal"];
+
+const taskStatus = {
+  oddNumberedTask: "list-group-item",
+  evenNumberedTask: "list-group-item-dark",
+  important: "list-group-item-warning",
+  completed: "list-group-item-light",
+};
 export class View {
   #taskContainer;
   #publishAddProjectEvent;
@@ -33,7 +40,8 @@ export class View {
 
   renderStartPage(allPreviousTasks) {
     if (!allPreviousTasks) this.renderEmptyListPage();
-    this.#renderTaskList(projectTitleList);
+    this.#createDropDownMenu(projectTitleList);
+    this.#makeListGroupContainer(allPreviousTasks);
     // allPreviousTasks itself is an array containing eacy project array
     // To access each project use [] index
     // To access task of each project, use [][] index
@@ -47,7 +55,7 @@ export class View {
     // 3.
   }
 
-  #renderTaskList(projectTitleList) {
+  #createDropDownMenu(projectTitleList) {
     this.projectTitleList = projectTitleList;
     // Dropdown menu container
     const dropdownContainer = createElement("div");
@@ -75,12 +83,6 @@ export class View {
       this.projectTitleList,
       dropdownMenuList
     );
-
-    // Make list Group
-    const listGroupContainer = createElement("div");
-    this.#taskContainer.append(listGroupContainer);
-
-    // this.#makeTaskListAndAppend(tasks, listGroupContainer);
   }
 
   #MakeDropdownListItemsAndAppend(list, parentElement) {
@@ -102,16 +104,47 @@ export class View {
       li.append(hr);
       parentElement.append(li);
     }
-
-    // It should update new and removed project name too.
   }
 
-  #makeTaskListAndAppend(tasks, parentElement) {
-    // List group container
-    // Mak
+  #makeListGroupContainer(tasks) {
+    // Make list Group
+    const listGroupContainer = createElement("div");
+    listGroupContainer.classList.add("list-group", "list-group-flush", "w-75");
+    this.#taskContainer.append(listGroupContainer);
+
+    const numberOfProjects = tasks.length;
+    for (let i = 0; i < numberOfProjects; i++) {
+      for (const task of tasks[i]) {
+        // Need a method to change the color of list depending on listnumber
+        const taskItem = this.#addTaskItemsToListGroupContainer(task);
+        listGroupContainer.append(taskItem);
+      }
+    }
   }
 
-  renderProjectList() {}
+  #addTaskItemsToListGroupContainer(task) {
+    const aElement = createElement("a");
+    aElement.setAttribute("href", "#");
+    aElement.classList.add(
+      "list-group-item",
+      "list-group-item-action",
+      "list-group-item-light"
+    );
+
+    const formInput = createElement("input");
+    formInput.classList.add("form-check-input", "me-1");
+    formInput.type = "checkbox";
+    formInput.value = "";
+    formInput.id = "checkboxStretched";
+    aElement.append(formInput);
+
+    const formLabel = createElement("label", task.title);
+    formLabel.classList.add("form-check-label", "stretched-link");
+    formLabel.htmlFor = "checkboxStretched";
+    aElement.append(formLabel);
+
+    return aElement;
+  }
 
   renderEmptyListPage() {
     if (this.#taskContainer.hasChildNodes())
