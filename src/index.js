@@ -1,7 +1,7 @@
-import { View } from "./modules/view.js";
+import { Controller } from "./modules/controller.js";
 
 const taskContainer = document.getElementById("task-container");
 
-const view = new View(taskContainer);
+const controller = new Controller(taskContainer);
 
-view.renderStartPage();
+controller.init();

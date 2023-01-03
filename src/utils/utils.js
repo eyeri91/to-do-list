@@ -1,5 +1,5 @@
 export function toSentenceCase(string) {
-  return string[0].toUpperCase() + string[0].slice(1);
+  return string[0].toUpperCase() + string.slice(1);
 }
 
 export function createElement(elementType, elementText) {
@@ -7,3 +7,7 @@ export function createElement(elementType, elementText) {
   if (elementText) element.textContent = elementText;
   return element;
 }
+
+// maybe I can make a function to lowercase the string and if they are
+// sliced by empty space, change the empty space to dash
+// To transform it to classname
