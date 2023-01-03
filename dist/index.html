@@ -28,11 +28,87 @@
               <a class="navbar-brand fs-3">Home </a>
               <button
                 type="button"
-                class="btn btn-md btn-primary rounded-5 create-task-button d-none d-md-inline"
+                class="btn btn-md btn-primary rounded-5 d-none d-md-inline"
                 id="add-task-button"
+                data-bs-toggle="modal"
+                data-bs-target="#addTaskModal"
               >
                 +
               </button>
+              <div
+                class="modal fade"
+                id="addTaskModal"
+                tabindex="-1"
+                aria-labelledby="addTaskModalLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1
+                        class="modal-title fs-5 flex-grow-1"
+                        id="addTaskModalLabel"
+                      >
+                        Add a new task
+                      </h1>
+                      <button
+                        type="button"
+                        class="btn-close ms-3"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="input-group mb-3">
+                        <button
+                          class="btn btn-outline-secondary dropdown-toggle"
+                          type="button"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                        >
+                          Projects
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li>
+                            <a class="dropdown-item" href="#">Personal</a>
+                          </li>
+                        </ul>
+                        <input
+                          type="text"
+                          class="form-control"
+                          aria-label="Text input with dropdown button"
+                          placeholder="title"
+                        />
+                      </div>
+                      <div class="input-group mb-3">
+                        <input type="date" class="form-control" id="date" />
+                      </div>
+                      <div class="form-check form-switch form-check-reverse">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="priorityCheckbox"
+                        />
+                        <label class="form-check-label" for="priorityCheckbox"
+                          >Priority</label
+                        >
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                      <button type="button" class="btn btn-primary">
+                        Save
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="collapse navbar-collapse mb-4" id="navbarNavAltMarkup">
               <div class="navbar-nav">
@@ -51,11 +127,47 @@
                 <a class="navbar-brand project-category fs-3">Projects</a>
                 <button
                   type="button"
-                  class="btn btn-md btn-primary rounded-5 create-project-button d-none d-md-inline"
+                  class="btn btn-md btn-primary rounded-5 d-none d-md-inline"
                   id="add-project-button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#addProjectModal"
                 >
                   +
                 </button>
+                <div
+                  class="modal fade"
+                  id="addProjectModal"
+                  tabindex="-1"
+                  aria-labelledby="addProjectModalLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-body">
+                        <div class="input-group">
+                          <input
+                            type="text"
+                            class="form-control"
+                            aria-label="Text input with dropdown button"
+                            placeholder="title"
+                          />
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-secondary"
+                          data-bs-dismiss="modal"
+                        >
+                          Close
+                        </button>
+                        <button type="button" class="btn btn-primary">
+                          Save
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="navbar-nav align-self-start">
                 <a class="nav-link active" aria-current="page" href="#"
