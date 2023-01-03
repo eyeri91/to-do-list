@@ -35,6 +35,21 @@ export class View {
     this.projectTitleList;
   }
 
+  #hideAddTaskAndProjectButtonWhenNavbarIsNotExpanded(
+    navbarTogglerButton,
+    addTaskButton,
+    addProjectButton
+  ) {
+    const isExpanded = navbarTogglerButton.getAttribute("aria-expanded");
+    console.log(isExpanded);
+    if (isExpanded === "true") {
+      addTaskButton.classList.remove("d-none");
+      addProjectButton.classList.remove("d-none");
+    } else if (isExpanded === "false") {
+      addTaskButton.classList.add("d-none");
+      addProjectButton.classList.add("d-none");
+    }
+  }
   // Function to update taskListContainer with chose list
   // Function to add and remove project to the sideBar
 
@@ -45,6 +60,18 @@ export class View {
     // allPreviousTasks itself is an array containing eacy project array
     // To access each project use [] index
     // To access task of each project, use [][] index
+
+    const addTaskButton = document.getElementById("add-task-button");
+    const addProjectButton = document.getElementById("add-project-button");
+    const navbarTogglerButton = document.getElementById("navbar-toggler");
+
+    navbarTogglerButton.addEventListener("click", () => {
+      this.#hideAddTaskAndProjectButtonWhenNavbarIsNotExpanded(
+        navbarTogglerButton,
+        addTaskButton,
+        addProjectButton
+      );
+    });
   }
 
   loadTasksForChosenCategory() {
