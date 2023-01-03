@@ -191,6 +191,16 @@ export class View {
     // OpenNewTaskModal();
   }
 
+  addTask() {
+    const saveTaskButton = document.getElementById("save-task-button");
+    saveTaskButton.addEventListener("click", () => {});
+    this.#publishAddTaskEvent(newTask);
+  }
+
+  removeTask() {
+    this.#publishRemoveTaskEvent(taskToBeRemoved);
+  }
+
   addNewProject(newProject) {
     this.#publishAddProjectEvent(newProject.title);
     this.projectTitleList.push(newProject.title);
@@ -204,14 +214,6 @@ export class View {
       (project) => project.title !== projectToBeRemoved.title
     );
     // a function to update a project title list array in view.
-  }
-
-  addTask() {
-    this.#publishAddTaskEvent(newTask);
-  }
-
-  removeTask() {
-    this.#publishRemoveTaskEvent(taskToBeRemoved);
   }
 
   editTaskDetails() {}
