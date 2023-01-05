@@ -14,7 +14,7 @@ export class View {
   #taskContainer;
   #publishAddProjectEvent;
   #publishRemoveProjectEvent;
-  #publishAddTaskEvent;
+  #publishNewTaskEvent;
   #publishRemoveTaskEvent;
   #publishSelectTaskCategory;
   projectTitleList;
@@ -22,14 +22,15 @@ export class View {
     taskContainer,
     publishAddProjectEvent,
     publishRemoveProjectEvent,
-    publishAddTaskEvent,
+    publishNewTaskEvent,
     publishRemoveTaskEvent,
     publishSelectTaskCategory
   ) {
     this.#taskContainer = taskContainer;
+    this.projectTitleList = projectTitleList;
     this.#publishAddProjectEvent = publishAddProjectEvent;
     this.#publishRemoveProjectEvent = publishRemoveProjectEvent;
-    this.#publishAddTaskEvent = publishAddTaskEvent;
+    this.#publishNewTaskEvent = publishNewTaskEvent;
     this.#publishRemoveTaskEvent = publishRemoveTaskEvent;
     this.#publishSelectTaskCategory = publishSelectTaskCategory;
     this.projectTitleList;
@@ -41,7 +42,6 @@ export class View {
     addProjectButton
   ) {
     const isExpanded = navbarTogglerButton.getAttribute("aria-expanded");
-    console.log(isExpanded);
     if (isExpanded === "true") {
       addTaskButton.classList.remove("d-none");
       addProjectButton.classList.remove("d-none");
@@ -55,8 +55,15 @@ export class View {
 
   renderStartPage(allPreviousTasks) {
     if (!allPreviousTasks) this.renderEmptyListPage();
-    this.#createDropDownMenu(projectTitleList);
-    this.#makeListGroupContainer(allPreviousTasks);
+    const listHeader = createElement("h2", "All tasks");
+    listHeader.id = "list-header";
+    this.#taskContainer.append(listHeader);
+    const listGroupContainer = createElement("div");
+    listGroupContainer.id = "list-group-container";
+    listGroupContainer.classList.add("list-group", "list-group-flush", "w-75");
+    this.#taskContainer.append(listGroupContainer);
+    this.loadRelatedProjects(allPreviousTasks);
+
     // allPreviousTasks itself is an array containing eacy project array
     // To access each project use [] index
     // To access task of each project, use [][] index
@@ -72,6 +79,13 @@ export class View {
         addProjectButton
       );
     });
+
+    const saveTaskButton = document.getElementById("save-task-button");
+    saveTaskButton.addEventListener("click", () => {
+      const newTask = this.addTask();
+      this.#publishNewTaskEvent(newTask);
+      location.replace();
+    });
   }
 
   loadTasksForChosenCategory() {
@@ -82,66 +96,14 @@ export class View {
     // 3.
   }
 
-  #createDropDownMenu(projectTitleList) {
-    this.projectTitleList = projectTitleList;
-    // Dropdown menu container
-    const dropdownContainer = createElement("div");
-    dropdownContainer.classList.add("btn-group", "align-self-start", "w-25");
-    this.#taskContainer.append(dropdownContainer);
-    // Dropdown button
-    const dropdownButton = createElement("button", "All tasks");
-    dropdownContainer.append(dropdownButton);
-    dropdownButton.type = "button";
-    dropdownButton.classList.add(
-      "btn",
-      "bthn-md",
-      "dropdown-toggle",
-      "border-0"
-    );
-    dropdownButton.setAttribute("aria-expanded", false);
-    dropdownButton.setAttribute("data-bs-toggle", "dropdown");
-    const dropdownMenuList = createElement("ul");
-    dropdownContainer.append(dropdownMenuList);
-    dropdownMenuList.classList.add("dropdown-menu");
-
-    // Dropdown menu list
-    this.#MakeDropdownListItemsAndAppend(homeTaskMenuList, dropdownMenuList);
-    this.#MakeDropdownListItemsAndAppend(
-      this.projectTitleList,
-      dropdownMenuList
-    );
-  }
-
-  #MakeDropdownListItemsAndAppend(list, parentElement) {
-    for (const item of list) {
-      const li = createElement("li");
-      if (list === projectTitleList) {
-        li.classList.add(item.toLowerCase());
-      }
-      const a = createElement("a", item);
-      a.classList.add("dropdown-item");
-      a.setAttribute("href", "#");
-      li.append(a);
-      parentElement.append(li);
-    }
-    if (list === homeTaskMenuList) {
-      const li = createElement("li");
-      const hr = createElement("hr");
-      hr.classList.add("dropdown-divider");
-      li.append(hr);
-      parentElement.append(li);
-    }
-  }
-
-  #makeListGroupContainer(arrayOfProjects) {
-    // Make list Group
-    const listGroupContainer = createElement("div");
-    listGroupContainer.classList.add("list-group", "list-group-flush", "w-75");
-    this.#taskContainer.append(listGroupContainer);
-
-    const numberOfProjects = arrayOfProjects.length;
+  loadRelatedProjects(projects) {
+    // This needs to be refactored or fixed for loading all tasks in start page and loading certain projects"
+    const listGroupContainer = document.getElementById("list-group-container");
+    if (listGroupContainer.hasChildNodes())
+      listGroupContainer.replaceChildren();
+    const numberOfProjects = projects.length;
     for (let i = 0; i < numberOfProjects; i++) {
-      const arrayOfTasksFromProject = arrayOfProjects[i];
+      const arrayOfTasksFromProject = projects[i];
       for (const task of arrayOfTasksFromProject) {
         const indexOfTask = arrayOfTasksFromProject.indexOf(task);
         // Need a method to change the color of list depending on listnumber
@@ -192,9 +154,19 @@ export class View {
   }
 
   addTask() {
-    const saveTaskButton = document.getElementById("save-task-button");
-    saveTaskButton.addEventListener("click", () => {});
-    this.#publishAddTaskEvent(newTask);
+    const chosenProjectName = document.getElementById("project-for-new-task");
+    const newTaskTitle = document.getElementById("new-task-title");
+    const newTaskDue = document.getElementById("task-due");
+    const isNewTaskImportant = document.getElementById("task-priority-status");
+
+    const taskObject = {
+      title: newTaskTitle.value,
+      dueDate: newTaskDue.value,
+      projectCategory: chosenProjectName.value,
+      isImportant: isNewTaskImportant.checked,
+    };
+
+    return taskObject;
   }
 
   removeTask() {
@@ -223,3 +195,54 @@ export class View {
   // When screen is less than medium and the burger icon is collpased,
   // Then add those 2 buttons for Home and Projects
 }
+
+// #createDropDownMenu(projectTitleList) {
+//   this.projectTitleList = projectTitleList;
+//   // Dropdown menu container
+//   const dropdownContainer = createElement("div");
+//   dropdownContainer.classList.add("btn-group", "align-self-start", "w-25");
+//   this.#taskContainer.append(dropdownContainer);
+//   // Dropdown button
+//   const dropdownButton = createElement("button", "All tasks");
+//   dropdownContainer.append(dropdownButton);
+//   dropdownButton.type = "button";
+//   dropdownButton.classList.add(
+//     "btn",
+//     "bthn-md",
+//     "dropdown-toggle",
+//     "border-0"
+//   );
+//   dropdownButton.setAttribute("aria-expanded", false);
+//   dropdownButton.setAttribute("data-bs-toggle", "dropdown");
+//   const dropdownMenuList = createElement("ul");
+//   dropdownContainer.append(dropdownMenuList);
+//   dropdownMenuList.classList.add("dropdown-menu");
+
+//   // Dropdown menu list
+//   this.#MakeDropdownListItemsAndAppend(homeTaskMenuList, dropdownMenuList);
+//   this.#MakeDropdownListItemsAndAppend(
+//     this.projectTitleList,
+//     dropdownMenuList
+//   );
+// }
+
+// #MakeDropdownListItemsAndAppend(list, parentElement) {
+//   for (const item of list) {
+//     const li = createElement("li");
+//     if (list === projectTitleList) {
+//       li.classList.add(item.toLowerCase());
+//     }
+//     const a = createElement("a", item);
+//     a.classList.add("dropdown-item");
+//     a.setAttribute("href", "#");
+//     li.append(a);
+//     parentElement.append(li);
+//   }
+//   if (list === homeTaskMenuList) {
+//     const li = createElement("li");
+//     const hr = createElement("hr");
+//     hr.classList.add("dropdown-divider");
+//     li.append(hr);
+//     parentElement.append(li);
+//   }
+// }

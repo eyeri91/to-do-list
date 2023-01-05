@@ -2,22 +2,30 @@ import Task from "./task.js";
 import Project from "./project.js";
 // import { toSentenceCase } from "../utils/utils.js";
 
-const defaultTask = new Task("Finish TypeScript course", "No date", "Personal");
-const defaultTask2 = new Task("sds", "No date", "Personal");
+const defaultTask = new Task("Finish TypeScript course", "", "Personal");
+const defaultTask2 = new Task("sds", "", "Personal");
+const defaultTaks3 = new Task("Buy cheese", "", "");
+const defaultTaks4 = new Task("Supermarket", "", "");
 const personalProject = new Project("Personal");
+const allTasksProject = new Project("All tasks");
 personalProject.addTask(defaultTask);
 personalProject.addTask(defaultTask2);
+allTasksProject.addTask(defaultTaks3);
+allTasksProject.addTask(defaultTaks4);
 
 export class Model {
   #projects;
+  #publishNewTaskAddedEvent;
   #publishReturnAllTasksEvent;
   #publishReleaseTasksForChosenCategoryEvent;
   constructor(
+    publishNewTaskAddedEvent,
     publishReturnAllTasksEvent,
     publishReleaseTasksForChosenCategoryEvent
   ) {
     this.#projects = [];
-    this.#projects.push(personalProject);
+    this.#projects.push(personalProject, allTasksProject);
+    this.#publishNewTaskAddedEvent = publishNewTaskAddedEvent;
     this.#publishReturnAllTasksEvent = publishReturnAllTasksEvent;
     this.#publishReleaseTasksForChosenCategoryEvent =
       publishReleaseTasksForChosenCategoryEvent;
@@ -36,13 +44,21 @@ export class Model {
     );
   }
 
-  addTask(task) {
+  addTask(taskObject) {
+    const newTask = new Task(
+      taskObject.title,
+      taskObject.dueDate,
+      taskObject.projectCategory
+    );
+    console.log(newTask.projectCategory);
+    console.log(allTasksProject.title);
     for (const project of this.#projects) {
-      if (project.title === task.projectCategory) project.addTask(task);
+      if (project.title === newTask.projectCategory) project.addTask(newTask);
       else {
         alert("There is no project category found");
       }
     }
+    this.#publishNewTaskAddedEvent(this.#projects);
   }
 
   removeTask(task) {

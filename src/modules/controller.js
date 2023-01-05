@@ -24,10 +24,12 @@ export class Controller {
       (data) => this.#model.removeProject(data)
     );
 
-    this.#eventManager.subscribe(
-      "addTask",
-      (data) => this.#view.addTask(data),
-      (data) => this.#model.addTask(data)
+    this.#eventManager.subscribe("newTask", (data) => {
+      this.#model.addTask(data);
+    });
+
+    this.#eventManager.subscribe("newTaskAdded", (data) =>
+      this.#view.loadRelatedProjects(data)
     );
 
     this.#eventManager.subscribe(
@@ -48,7 +50,7 @@ export class Controller {
       taskContainer,
       (data) => this.#eventManager.publish("addProject", data),
       (data) => this.#eventManager.publish("removeProject", data),
-      (data) => this.#eventManager.publish("addTask", data),
+      (data) => this.#eventManager.publish("newTask", data),
       (data) => this.#eventManager.publish("removeTask", data),
       (data) => this.#eventManager.publish("selectTaskCategory", data)
     );
@@ -56,6 +58,7 @@ export class Controller {
 
   init() {
     this.#model = new Model(
+      (data) => this.#eventManager.publish("newTaskAdded", data),
       (data) => this.#eventManager.publish("returnAllTasks", data),
       (data) =>
         this.#eventManager.publish("releaseTasksForChosenCategory", data)
