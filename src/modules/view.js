@@ -117,8 +117,8 @@ export class View {
     for (let i = 0; i < numberOfProjects; i++) {
       const arrayOfTasksFromProject = projects[i];
       for (const task of arrayOfTasksFromProject) {
-        // console.log(task);
         const indexOfTask = arrayOfTasksFromProject.indexOf(task);
+
         // Need a method to change the color of list depending on listnumber
         const taskItem = this.#addTaskItemsToListGroupContainer(
           task,

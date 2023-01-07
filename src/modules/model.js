@@ -16,17 +16,17 @@ allTasksProject.addTask(defaultTaks4);
 export class Model {
   #projects;
   #publishNewTaskAddedEvent;
-  #publishReturnAllTasksEvent;
+
   #publishReleaseTasksForChosenCategoryEvent;
   constructor(
     publishNewTaskAddedEvent,
-    publishReturnAllTasksEvent,
+
     publishReleaseTasksForChosenCategoryEvent
   ) {
     this.#projects = [];
     this.#projects.push(personalProject, allTasksProject);
     this.#publishNewTaskAddedEvent = publishNewTaskAddedEvent;
-    this.#publishReturnAllTasksEvent = publishReturnAllTasksEvent;
+
     this.#publishReleaseTasksForChosenCategoryEvent =
       publishReleaseTasksForChosenCategoryEvent;
   }
@@ -56,7 +56,7 @@ export class Model {
       else continue;
     }
 
-    this.#publishNewTaskAddedEvent(this.#projects);
+    this.#publishNewTaskAddedEvent(this.collectTasksForChosenProjectName());
   }
 
   removeTask(task) {
@@ -73,8 +73,8 @@ export class Model {
         const allTasks = project.getAllTasks();
         allTasksFromEveryProject.push(allTasks);
       }
-      this.#publishReturnAllTasksEvent(allTasksFromEveryProject);
-      return;
+
+      return allTasksFromEveryProject;
     } else {
       const allTasksFromChosenProejct = [];
       for (const project of this.#projects) {

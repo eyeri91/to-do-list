@@ -61,11 +61,11 @@ export class Controller {
   init() {
     this.#model = new Model(
       (data) => this.#eventManager.publish("newTaskAdded", data),
-      (data) => this.#eventManager.publish("returnAllTasks", data),
       (data) =>
         this.#eventManager.publish("releaseTasksForChosenCategory", data)
     );
-    this.#model.collectTasksForChosenProjectName();
+    const allTasks = this.#model.collectTasksForChosenProjectName();
+    this.#eventManager.publish("returnAllTasks", allTasks);
   }
 }
 
