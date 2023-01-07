@@ -28,8 +28,10 @@ export class Controller {
       this.#model.addTask(data);
     });
 
-    this.#eventManager.subscribe("newTaskAdded", (data) =>
-      this.#view.loadRelatedProjects(data)
+    this.#eventManager.subscribe(
+      "newTaskAdded",
+      (data) => this.#view.loadRelatedProjects(data)
+      // console.log(data)
     );
 
     this.#eventManager.subscribe(

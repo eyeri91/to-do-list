@@ -83,9 +83,16 @@ export class View {
     const saveTaskButton = document.getElementById("save-task-button");
     saveTaskButton.addEventListener("click", () => {
       const newTask = this.addTask();
-      this.#publishNewTaskEvent(newTask);
+      if (newTask) this.#publishNewTaskEvent(newTask);
       // location.replace();
     });
+  }
+
+  #checkIfInputIsEmpty(...values) {
+    for (const value of values) {
+      if (value === "") alert("Oops! You missed something");
+      else return true;
+    }
   }
 
   loadTasksForChosenCategory() {
@@ -166,7 +173,9 @@ export class View {
       isImportant: isNewTaskImportant.checked,
     };
 
-    return taskObject;
+    if (this.#checkIfInputIsEmpty(newTaskTitle.value)) {
+      return taskObject;
+    } else return false;
   }
 
   removeTask() {
@@ -174,6 +183,7 @@ export class View {
   }
 
   addNewProject(newProject) {
+    // this.#checkIfInputIsEmpty()
     this.#publishAddProjectEvent(newProject.title);
     this.projectTitleList.push(newProject.title);
 
