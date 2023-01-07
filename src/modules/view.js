@@ -84,7 +84,7 @@ export class View {
     saveTaskButton.addEventListener("click", () => {
       const newTask = this.addTask();
       this.#publishNewTaskEvent(newTask);
-      location.replace();
+      // location.replace();
     });
   }
 

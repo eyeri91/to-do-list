@@ -50,14 +50,12 @@ export class Model {
       taskObject.dueDate,
       taskObject.projectCategory
     );
-    console.log(newTask.projectCategory);
-    console.log(allTasksProject.title);
+
     for (const project of this.#projects) {
       if (project.title === newTask.projectCategory) project.addTask(newTask);
-      else {
-        alert("There is no project category found");
-      }
+      else continue;
     }
+
     this.#publishNewTaskAddedEvent(this.#projects);
   }
 
