@@ -80,11 +80,14 @@ export class View {
       );
     });
 
+    const addTaskModal = new bootstrap.Modal("#add-task-modal");
     const saveTaskButton = document.getElementById("save-task-button");
     saveTaskButton.addEventListener("click", () => {
       const newTask = this.addTask();
-      if (newTask) this.#publishNewTaskEvent(newTask);
-      // location.replace();
+      if (newTask) {
+        this.#publishNewTaskEvent(newTask);
+        addTaskModal.hide();
+      }
     });
   }
 
@@ -104,7 +107,9 @@ export class View {
   }
 
   loadRelatedProjects(projects) {
-    // This needs to be refactored or fixed for loading all tasks in start page and loading certain projects"
+    // This needs to be refactord or fixed for loading all tasks in start page and loading certain projects"
+    // Now the data structure is different when it's loading for the first time and
+    //  when reloading after a new task is added
     const listGroupContainer = document.getElementById("list-group-container");
     if (listGroupContainer.hasChildNodes())
       listGroupContainer.replaceChildren();
@@ -112,6 +117,7 @@ export class View {
     for (let i = 0; i < numberOfProjects; i++) {
       const arrayOfTasksFromProject = projects[i];
       for (const task of arrayOfTasksFromProject) {
+        // console.log(task);
         const indexOfTask = arrayOfTasksFromProject.indexOf(task);
         // Need a method to change the color of list depending on listnumber
         const taskItem = this.#addTaskItemsToListGroupContainer(
