@@ -70,8 +70,10 @@ export class Model {
     if (!projectName) {
       const allTasksFromEveryProject = [];
       for (const project of this.#projects) {
-        const allTasks = project.getAllTasks();
-        allTasksFromEveryProject.push(allTasks);
+        const allTasksFromAProject = project.getAllTasks();
+        for (const task of allTasksFromAProject) {
+          allTasksFromEveryProject.push(task);
+        }
       }
 
       return allTasksFromEveryProject;
@@ -80,7 +82,9 @@ export class Model {
       for (const project of this.#projects) {
         if (project.title === projectName) {
           const allTasksOfThisCategory = project.getAllTasks();
-          allTasksFromChosenProejct.push(allTasksOfThisCategory);
+          for (const task of allTasksOfThisCategory) {
+            allTasksFromChosenProejct.push(task);
+          }
         }
       }
       this.#publishReleaseTasksForChosenCategoryEvent(

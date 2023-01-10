@@ -106,26 +106,24 @@ export class View {
     // 3.
   }
 
-  loadRelatedProjects(projects) {
+  loadRelatedProjects(collectedTasks) {
     // This needs to be refactord or fixed for loading all tasks in start page and loading certain projects"
     // Now the data structure is different when it's loading for the first time and
     //  when reloading after a new task is added
     const listGroupContainer = document.getElementById("list-group-container");
     if (listGroupContainer.hasChildNodes())
       listGroupContainer.replaceChildren();
-    const numberOfProjects = projects.length;
-    for (let i = 0; i < numberOfProjects; i++) {
-      const arrayOfTasksFromProject = projects[i];
-      for (const task of arrayOfTasksFromProject) {
-        const indexOfTask = arrayOfTasksFromProject.indexOf(task);
-
-        // Need a method to change the color of list depending on listnumber
-        const taskItem = this.#addTaskItemsToListGroupContainer(
-          task,
-          indexOfTask
-        );
-        listGroupContainer.append(taskItem);
-      }
+    const numberOfTasks = collectedTasks.length;
+    for (let i = 0; i < numberOfTasks; i++) {
+      const task = collectedTasks[i];
+      const indexOfTask = i;
+      console.log(i);
+      // Need a method to change the color of list depending on listnumber
+      const taskItem = this.#addTaskItemsToListGroupContainer(
+        task,
+        indexOfTask
+      );
+      listGroupContainer.append(taskItem);
     }
   }
 
@@ -134,7 +132,7 @@ export class View {
     aElement.setAttribute("href", "#");
     aElement.classList.add("list-group-item", "list-group-item-action");
 
-    indexOfTask / 2 !== 0
+    indexOfTask % 2 !== 0
       ? aElement.classList.add(taskStatus.evenNumberedTask)
       : aElement.classList.add(taskStatus.oddNumberedTask);
 
