@@ -1,4 +1,5 @@
 // import * as bootstrap from "bootstrap";
+import { toSentenceCase } from "../utils/utils.js";
 import { createElement } from "../utils/utils.js";
 
 const homeTaskMenuList = ["All tasks", "Today", "This week"];
@@ -190,25 +191,46 @@ export class View {
   addNewProject() {
     const newProjectTitle = document.getElementById("new-project-title");
     const newProjectObject = {
-      title: newProjectTitle.value,
+      title: toSentenceCase(newProjectTitle.value),
     };
 
     if (this.#checkIfInputIsEmpty(newProjectTitle.value)) {
-      this.projectTitleList.push(newProjectTitle.title);
+      this.projectTitleList.push(newProjectObject.title);
       return newProjectObject;
     } else return false;
     // a function to update a project title list array in view.
   }
 
-  updateProjectListContainer(projectTitle) {
+  createNewProjectElement(projectTitle) {
     const projectListContainer = document.getElementById(
       "project-list-container"
     );
+
+    const projectItemContainer = createElement("div");
+    projectItemContainer.classList.add(
+      "project-item-div",
+      "d-flex",
+      "align-items-center",
+      "justify-content-between"
+    );
+
     const newProjectItem = createElement("a", projectTitle);
     newProjectItem.classList.add("nav-link");
-    newProjectItem.setAttribute("href", "");
+    newProjectItem.setAttribute("href", "#");
+    projectItemContainer.append(newProjectItem);
 
-    projectListContainer.append(newProjectItem);
+    const removeProjectButton = createElement("button", "-");
+    removeProjectButton.setAttribute("type", "button");
+    removeProjectButton.classList.add(
+      "btn",
+      "btn-lg",
+      "text-danger",
+      "remove-project-btn"
+    );
+    console.log(removeProjectButton);
+    projectItemContainer.append(removeProjectButton);
+
+    projectListContainer.append(projectItemContainer);
   }
 
   removeProject(projectToBeRemoved) {

@@ -17,7 +17,7 @@ export class Controller {
     );
 
     this.#eventManager.subscribe("newProjectAdded", (data) =>
-      this.#view.updateProjectListContainer(data)
+      this.#view.createNewProjectElement(data)
     );
 
     this.#eventManager.subscribe(

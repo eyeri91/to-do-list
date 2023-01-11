@@ -1,5 +1,6 @@
 import Task from "./task.js";
 import Project from "./project.js";
+
 // import { toSentenceCase } from "../utils/utils.js";
 
 const defaultTask = new Task("Finish TypeScript course", "", "Personal");
@@ -31,10 +32,17 @@ export class Model {
       publishReleaseTasksForChosenCategoryEvent;
   }
   // create default projects and add it to projectList
-  addNewProject(projectObject) {
-    const newProject = new Project(projectObject.title);
-    this.#projects.push(newProject);
-    this.#publishNewProjectAddedEvent(newProject.title);
+  addNewProject(NewProjectObject) {
+    const isProjectAlreadyCreated = this.#projects.find(
+      (project) => project.title === NewProjectObject.title
+    );
+    if (isProjectAlreadyCreated)
+      alert("There is already a project with the same name!");
+    else {
+      const newProject = new Project(NewProjectObject.title);
+      this.#projects.push(newProject);
+      this.#publishNewProjectAddedEvent(newProject.title);
+    }
   }
 
   removeProject(projectTitle) {
