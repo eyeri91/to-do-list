@@ -16,26 +16,25 @@ allTasksProject.addTask(defaultTaks4);
 export class Model {
   #projects;
   #publishNewTaskAddedEvent;
-
+  #publishNewProjectAddedEvent;
   #publishReleaseTasksForChosenCategoryEvent;
   constructor(
     publishNewTaskAddedEvent,
-
+    publishNewProjectAddedEvent,
     publishReleaseTasksForChosenCategoryEvent
   ) {
     this.#projects = [];
     this.#projects.push(personalProject, allTasksProject);
     this.#publishNewTaskAddedEvent = publishNewTaskAddedEvent;
-
+    this.#publishNewProjectAddedEvent = publishNewProjectAddedEvent;
     this.#publishReleaseTasksForChosenCategoryEvent =
       publishReleaseTasksForChosenCategoryEvent;
   }
   // create default projects and add it to projectList
-  addNewProject(projectTitle) {
-    if (!this.#projects[projectTitle]) {
-      const newProject = new Project(projectTitle);
-      this.#projects.push(newProject);
-    } else alert("There is a project with the same name!");
+  addNewProject(projectObject) {
+    const newProject = new Project(projectObject.title);
+    this.#projects.push(newProject);
+    this.#publishNewProjectAddedEvent(newProject.title);
   }
 
   removeProject(projectTitle) {

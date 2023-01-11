@@ -12,10 +12,12 @@ export class Controller {
     this.#eventManager.subscribe("returnAllTasks", (data) =>
       this.#view.renderStartPage(data)
     );
-    this.#eventManager.subscribe(
-      "addProject",
-      (data) => this.#view.addNewProject(data),
-      (data) => this.#model.addNewProject(data)
+    this.#eventManager.subscribe("addProject", (data) =>
+      this.#model.addNewProject(data)
+    );
+
+    this.#eventManager.subscribe("newProjectAdded", (data) =>
+      this.#view.updateProjectListContainer(data)
     );
 
     this.#eventManager.subscribe(
@@ -30,7 +32,7 @@ export class Controller {
 
     this.#eventManager.subscribe(
       "newTaskAdded",
-      (data) => this.#view.loadRelatedProjects(data)
+      (data) => this.#view.loadRelatedProjectsTasks(data)
       // console.log(data)
     );
 
@@ -61,6 +63,7 @@ export class Controller {
   init() {
     this.#model = new Model(
       (data) => this.#eventManager.publish("newTaskAdded", data),
+      (data) => this.#eventManager.publish("newProjectAdded", data),
       (data) =>
         this.#eventManager.publish("releaseTasksForChosenCategory", data)
     );

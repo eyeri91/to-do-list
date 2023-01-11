@@ -62,7 +62,7 @@ export class View {
     listGroupContainer.id = "list-group-container";
     listGroupContainer.classList.add("list-group", "list-group-flush", "w-75");
     this.#taskContainer.append(listGroupContainer);
-    this.loadRelatedProjects(allPreviousTasks);
+    this.loadRelatedProjectsTasks(allPreviousTasks);
 
     // allPreviousTasks itself is an array containing eacy project array
     // To access each project use [] index
@@ -81,12 +81,22 @@ export class View {
     });
 
     const addTaskModal = new bootstrap.Modal("#add-task-modal");
-    const saveTaskButton = document.getElementById("save-task-button");
-    saveTaskButton.addEventListener("click", () => {
+    const saveNewTaskButton = document.getElementById("save-task-button");
+    saveNewTaskButton.addEventListener("click", () => {
       const newTask = this.addTask();
       if (newTask) {
         this.#publishNewTaskEvent(newTask);
         addTaskModal.hide();
+      }
+    });
+
+    const addProjectModal = new bootstrap.Modal("#add-project-modal");
+    const saveNewProjectButton = document.getElementById("save-project-button");
+    saveNewProjectButton.addEventListener("click", () => {
+      const newProject = this.addNewProject();
+      if (newProject) {
+        this.#publishAddProjectEvent(newProject);
+        addProjectModal.hide();
       }
     });
   }
@@ -98,15 +108,7 @@ export class View {
     }
   }
 
-  loadTasksForChosenCategory() {
-    // Add list part of html element and classes
-    // Add rules...
-    // 1. every 2nd item has gray bg
-    // 2. Importatn item has yellow bg
-    // 3.
-  }
-
-  loadRelatedProjects(collectedTasks) {
+  loadRelatedProjectsTasks(collectedTasks) {
     // This needs to be refactord or fixed for loading all tasks in start page and loading certain projects"
     // Now the data structure is different when it's loading for the first time and
     //  when reloading after a new task is added
@@ -117,7 +119,6 @@ export class View {
     for (let i = 0; i < numberOfTasks; i++) {
       const task = collectedTasks[i];
       const indexOfTask = i;
-      console.log(i);
       // Need a method to change the color of list depending on listnumber
       const taskItem = this.#addTaskItemsToListGroupContainer(
         task,
@@ -186,12 +187,28 @@ export class View {
     this.#publishRemoveTaskEvent(taskToBeRemoved);
   }
 
-  addNewProject(newProject) {
-    // this.#checkIfInputIsEmpty()
-    this.#publishAddProjectEvent(newProject.title);
-    this.projectTitleList.push(newProject.title);
+  addNewProject() {
+    const newProjectTitle = document.getElementById("new-project-title");
+    const newProjectObject = {
+      title: newProjectTitle.value,
+    };
 
+    if (this.#checkIfInputIsEmpty(newProjectTitle.value)) {
+      this.projectTitleList.push(newProjectTitle.title);
+      return newProjectObject;
+    } else return false;
     // a function to update a project title list array in view.
+  }
+
+  updateProjectListContainer(projectTitle) {
+    const projectListContainer = document.getElementById(
+      "project-list-container"
+    );
+    const newProjectItem = createElement("a", projectTitle);
+    newProjectItem.classList.add("nav-link");
+    newProjectItem.setAttribute("href", "");
+
+    projectListContainer.append(newProjectItem);
   }
 
   removeProject(projectToBeRemoved) {
