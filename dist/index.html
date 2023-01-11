@@ -24,11 +24,13 @@
       <nav class="navbar navbar-expand-md bg-light ps-md-4 px-3 col-md-3">
         <div class="container-fluid">
           <div class="nav-category-container flex-nowrap">
-            <div class="home-category flex-nowrap">
+            <div
+              class="home-category d-flex flex-nowrap justify-content-between"
+            >
               <a class="navbar-brand fs-3">Home </a>
               <button
                 type="button"
-                class="btn btn-md btn-primary rounded-5 d-none d-md-inline"
+                class="btn btn-lg text-primary"
                 id="add-task-button"
                 data-bs-toggle="modal"
                 data-bs-target="#add-task-modal"
@@ -134,11 +136,13 @@
               class="collapse navbar-collapse d-md-flex flex-md-column"
               id="navbarNavAltMarkup"
             >
-              <div class="projects-category flex-nowrap">
-                <a class="navbar-brand project-category fs-3">Projects</a>
+              <div
+                class="projects-category flex-nowrap d-flex justify-content-between"
+              >
+                <a class="navbar-brand project-category fs-3 me-0">Projects</a>
                 <button
                   type="button"
-                  class="btn btn-md btn-primary rounded-5 d-none d-md-inline"
+                  class="btn btn-lg text-primary"
                   id="add-project-button"
                   data-bs-toggle="modal"
                   data-bs-target="#add-project-modal"
@@ -206,11 +210,32 @@
                 class="navbar-nav align-self-start"
                 id="project-list-container"
               >
-                <a class="nav-link active" aria-current="page" href="#"
-                  >Personal</a
+                <div
+                  class="project-item-div d-flex align-items-center justify-content-between"
                 >
-                <a class="nav-link" href="#">Work</a>
-                <a class="nav-link" href="#">Workouts</a>
+                  <a class="nav-link active" aria-current="page" href="#"
+                    >Personal
+                  </a>
+                  <button type="button" class="btn btn-lg text-danger">
+                    -
+                  </button>
+                </div>
+                <div
+                  class="project-item-div d-flex align-items-center justify-content-between"
+                >
+                  <a class="nav-link" href="#">Work</a>
+                  <button type="button" class="btn btn-lg text-danger">
+                    -
+                  </button>
+                </div>
+                <div
+                  class="project-item-div d-flex align-items-center justify-content-between"
+                >
+                  <a class="nav-link" href="#">Workouts</a>
+                  <button type="button" class="btn btn-lg text-danger">
+                    -
+                  </button>
+                </div>
               </div>
             </div>
           </div>
