@@ -6,8 +6,8 @@ import { removeItemFromArray } from "../utils/utils.js";
 
 const defaultTask = new Task("Finish TypeScript course", "", "Personal");
 const defaultTask2 = new Task("sds", "", "Personal");
-const defaultTaks3 = new Task("Buy cheese", "", "");
-const defaultTaks4 = new Task("Supermarket", "", "");
+const defaultTaks3 = new Task("Buy cheese", "");
+const defaultTaks4 = new Task("Supermarket", "");
 const personalProject = new Project("Personal");
 const allTasksProject = new Project("All tasks");
 personalProject.addTask(defaultTask);
@@ -68,10 +68,10 @@ export class Model {
   }
 
   removeTask(task) {
-    for (const project of this.#projects) {
-      if (task.projectCategory === project.title) project.deleteTask(task);
-      else alert("There is no project category found ");
-    }
+    const matchingProject = this.#projects.find(
+      (project) => project.title === task.projectCategory
+    );
+    matchingProject.deleteTask(task);
   }
 
   collectTasksForChosenProjectName(projectName) {

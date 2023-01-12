@@ -139,7 +139,7 @@ export class View {
 
   #addTaskItemsToListGroupContainer(task, indexOfTask) {
     const taskItemContainer = createElement("div");
-    taskItemContainer.classList.add("d-flex");
+    taskItemContainer.classList.add("d-flex", "task-item-container");
     const aElement = createElement("a");
     // aElement.setAttribute("href", "#");
     aElement.classList.add(
@@ -180,6 +180,10 @@ export class View {
       "text-danger",
       "remove-project-btn"
     );
+    removeTaskButton.addEventListener("click", (e) => {
+      this.#removeTaskElement(e.target.parentElement);
+      this.#publishRemoveTaskEvent(task);
+    });
     taskItemContainer.append(aElement);
     taskItemContainer.append(removeTaskButton);
 
@@ -215,6 +219,12 @@ export class View {
     } else return false;
   }
 
+  #removeTaskElement(taskItemContainer) {
+    if (taskItemContainer.classList.contains("task-item-container")) {
+      taskItemContainer.remove();
+    }
+  }
+
   removeTask() {
     this.#publishRemoveTaskEvent(taskToBeRemoved);
   }
@@ -239,7 +249,7 @@ export class View {
 
     const projectItemContainer = createElement("div");
     projectItemContainer.classList.add(
-      "project-item-div",
+      "project-item-container",
       "d-flex",
       "align-items-center",
       "justify-content-between"
@@ -268,7 +278,7 @@ export class View {
   }
 
   #removeProjectElement(projectItemContainer) {
-    if (projectItemContainer.classList.contains("project-item-div")) {
+    if (projectItemContainer.classList.contains("project-item-container")) {
       projectItemContainer.remove();
       for (const child of projectItemContainer.children) {
         if (child.tagName.toLowerCase() === "a") {

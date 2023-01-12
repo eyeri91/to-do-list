@@ -34,10 +34,8 @@ export class Controller {
       // console.log(data)
     );
 
-    this.#eventManager.subscribe(
-      "removeTask",
-      (data) => this.#view.removeTask(data),
-      (data) => this.#model.removeTask(data)
+    this.#eventManager.subscribe("removeTask", (data) =>
+      this.#model.removeTask(data)
     );
 
     this.#eventManager.subscribe("selectTaskCategory", (data) =>
