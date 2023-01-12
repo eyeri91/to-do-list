@@ -138,9 +138,16 @@ export class View {
   }
 
   #addTaskItemsToListGroupContainer(task, indexOfTask) {
+    const taskItemContainer = createElement("div");
+    taskItemContainer.classList.add("d-flex");
     const aElement = createElement("a");
-    aElement.setAttribute("href", "#");
-    aElement.classList.add("list-group-item", "list-group-item-action");
+    // aElement.setAttribute("href", "#");
+    aElement.classList.add(
+      "list-group-item",
+      "list-group-item-action",
+      "d-flex",
+      "align-items-center"
+    );
 
     indexOfTask % 2 !== 0
       ? aElement.classList.add(taskStatus.evenNumberedTask)
@@ -160,7 +167,23 @@ export class View {
     formLabel.htmlFor = "checkboxStretched";
     aElement.append(formLabel);
 
-    return aElement;
+    const removeTaskButton = createElement("button", "-");
+    removeTaskButton.type = "button";
+    removeTaskButton.classList.add(
+      "btn",
+      "btn-lg",
+      "border-0",
+      "fw-bold",
+      "fs-4",
+      "ms-3",
+      "p-0",
+      "text-danger",
+      "remove-project-btn"
+    );
+    taskItemContainer.append(aElement);
+    taskItemContainer.append(removeTaskButton);
+
+    return taskItemContainer;
   }
 
   toggleImportantTask() {
