@@ -20,10 +20,8 @@ export class Controller {
       this.#view.createNewProjectElement(data)
     );
 
-    this.#eventManager.subscribe(
-      "removeProject",
-      (data) => this.#view.removeProject(data),
-      (data) => this.#model.removeProject(data)
+    this.#eventManager.subscribe("removeProject", (data) =>
+      this.#model.removeProject(data)
     );
 
     this.#eventManager.subscribe("newTask", (data) => {

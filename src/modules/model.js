@@ -1,5 +1,6 @@
 import Task from "./task.js";
 import Project from "./project.js";
+import { removeItemFromArray } from "../utils/utils.js";
 
 // import { toSentenceCase } from "../utils/utils.js";
 
@@ -45,9 +46,9 @@ export class Model {
     }
   }
 
-  removeProject(projectTitle) {
+  removeProject(projectTitleToBeRemoved) {
     this.#projects = this.#projects.filter(
-      (project) => project.title !== projectTitle
+      (project) => project.title !== projectTitleToBeRemoved
     );
   }
 

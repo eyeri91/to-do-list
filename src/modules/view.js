@@ -3,7 +3,7 @@ import { toSentenceCase } from "../utils/utils.js";
 import { createElement } from "../utils/utils.js";
 
 const homeTaskMenuList = ["All tasks", "Today", "This week"];
-let projectTitleList = ["Personal"];
+// let projectTitleList = ["Personal"];
 
 const taskStatus = {
   oddNumberedTask: "list-group-item",
@@ -18,7 +18,7 @@ export class View {
   #publishNewTaskEvent;
   #publishRemoveTaskEvent;
   #publishSelectTaskCategory;
-  projectTitleList;
+  #projectTitleList;
   constructor(
     taskContainer,
     publishAddProjectEvent,
@@ -28,13 +28,12 @@ export class View {
     publishSelectTaskCategory
   ) {
     this.#taskContainer = taskContainer;
-    this.projectTitleList = projectTitleList;
+    this.#projectTitleList = ["Personal"];
     this.#publishAddProjectEvent = publishAddProjectEvent;
     this.#publishRemoveProjectEvent = publishRemoveProjectEvent;
     this.#publishNewTaskEvent = publishNewTaskEvent;
     this.#publishRemoveTaskEvent = publishRemoveTaskEvent;
     this.#publishSelectTaskCategory = publishSelectTaskCategory;
-    this.projectTitleList;
   }
 
   #hideAddTaskAndProjectButtonWhenNavbarIsNotExpanded(
@@ -100,6 +99,15 @@ export class View {
         addProjectModal.hide();
       }
     });
+
+    const removeProjectButtons = Array.from(
+      document.getElementsByClassName("remove-project-btn")
+    );
+    removeProjectButtons.forEach((button) =>
+      button.addEventListener("click", (e) => {
+        this.#removeProjectElement(e.target.parentElement);
+      })
+    );
   }
 
   #checkIfInputIsEmpty(...values) {
@@ -195,7 +203,7 @@ export class View {
     };
 
     if (this.#checkIfInputIsEmpty(newProjectTitle.value)) {
-      this.projectTitleList.push(newProjectObject.title);
+      this.#projectTitleList.push(newProjectObject.title);
       return newProjectObject;
     } else return false;
     // a function to update a project title list array in view.
@@ -225,19 +233,33 @@ export class View {
       "btn",
       "btn-lg",
       "text-danger",
-      "remove-project-btn"
+      "remove-project-btn",
+      "border-0"
     );
-    console.log(removeProjectButton);
+    removeProjectButton.addEventListener("click", (e) =>
+      this.#removeProjectElement(e.target.parentElement)
+    );
     projectItemContainer.append(removeProjectButton);
 
     projectListContainer.append(projectItemContainer);
   }
 
-  removeProject(projectToBeRemoved) {
-    this.#publishRemoveProjectEvent(projectToBeRemoved.title);
-    this.projectTitleList = this.projectTitleList.filter(
-      (project) => project.title !== projectToBeRemoved.title
-    );
+  #removeProjectElement(projectItemContainer) {
+    if (projectItemContainer.classList.contains("project-item-div")) {
+      projectItemContainer.remove();
+      for (const child of projectItemContainer.children) {
+        if (child.tagName.toLowerCase() === "a") {
+          const projectTitleToBeRemoved = child.textContent;
+          this.#projectTitleList = this.#projectTitleList.filter(
+            (project) => project !== projectTitleToBeRemoved
+          );
+          this.#publishRemoveProjectEvent(projectTitleToBeRemoved);
+
+          // Remove the same project from the projectTitleList
+        }
+      }
+    }
+
     // a function to update a project title list array in view.
   }
 
