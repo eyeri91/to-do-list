@@ -84,7 +84,7 @@ export class View {
     const addTaskModal = new bootstrap.Modal("#add-task-modal");
     const saveNewTaskButton = document.getElementById("save-task-button");
     saveNewTaskButton.addEventListener("click", () => {
-      const newTask = this.addTask();
+      const newTask = this.#addTask();
       if (newTask) {
         this.#publishNewTaskEvent(newTask);
         addTaskModal.hide();
@@ -94,7 +94,7 @@ export class View {
     const addProjectModal = new bootstrap.Modal("#add-project-modal");
     const saveNewProjectButton = document.getElementById("save-project-button");
     saveNewProjectButton.addEventListener("click", () => {
-      const newProject = this.addNewProject();
+      const newProject = this.#addNewProject();
       if (newProject) {
         this.#publishAddProjectEvent(newProject);
         addProjectModal.hide();
@@ -185,6 +185,8 @@ export class View {
     let index = 0;
     for (const childContainer of allChildrenContainer) {
       const aElement = childContainer.querySelector("a");
+      aElement.classList.remove(taskStatus.evenNumberedTask);
+
       if (index % 2 !== 0) {
         aElement.classList.add(taskStatus.evenNumberedTask);
       } else {
@@ -205,7 +207,7 @@ export class View {
     // OpenNewTaskModal();
   }
 
-  addTask() {
+  #addTask() {
     const chosenProjectName = document.getElementById("project-for-new-task");
     const newTaskTitle = document.getElementById("new-task-title");
     const newTaskDue = document.getElementById("task-due");
@@ -224,16 +226,18 @@ export class View {
   }
 
   #removeTaskElement(taskItemContainer) {
+    const listGroupContainer = document.getElementById("list-group-container");
     if (taskItemContainer.classList.contains("task-item-container")) {
       taskItemContainer.remove();
+      this.#setTaskItemBackgroundColor(listGroupContainer);
     }
   }
 
-  removeTask() {
-    this.#publishRemoveTaskEvent(taskToBeRemoved);
-  }
+  // removeTask() {
+  //   this.#publishRemoveTaskEvent(taskToBeRemoved);
+  // }
 
-  addNewProject() {
+  #addNewProject() {
     const newProjectTitle = document.getElementById("new-project-title");
     const newProjectObject = {
       title: toSentenceCase(newProjectTitle.value),
