@@ -1,6 +1,7 @@
 // import * as bootstrap from "bootstrap";
 import { toSentenceCase } from "../utils/utils.js";
 import { createElement } from "../utils/utils.js";
+import { v4 as uuidv4 } from "uuid";
 
 const homeTaskMenuList = ["All tasks", "Today", "This week"];
 // let projectTitleList = ["Personal"];
@@ -159,12 +160,13 @@ export class View {
     formInput.classList.add("form-check-input", "me-1");
     formInput.type = "checkbox";
     formInput.value = "";
-    formInput.id = "checkboxStretched";
+    const formInputIdForTask = uuidv4();
+    formInput.id = formInputIdForTask;
     aElement.append(formInput);
 
     const formLabel = createElement("label", task.title);
     formLabel.classList.add("form-check-label", "stretched-link");
-    formLabel.htmlFor = "checkboxStretched";
+    formLabel.htmlFor = formInputIdForTask;
     aElement.append(formLabel);
 
     const removeTaskButton = createElement("button", "-");
