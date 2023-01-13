@@ -119,26 +119,18 @@ export class View {
   }
 
   loadRelatedProjectsTasks(collectedTasks) {
-    // This needs to be refactord or fixed for loading all tasks in start page and loading certain projects"
-    // Now the data structure is different when it's loading for the first time and
-    //  when reloading after a new task is added
     const listGroupContainer = document.getElementById("list-group-container");
     if (listGroupContainer.hasChildNodes())
       listGroupContainer.replaceChildren();
-    const numberOfTasks = collectedTasks.length;
-    for (let i = 0; i < numberOfTasks; i++) {
-      const task = collectedTasks[i];
-      const indexOfTask = i;
-      // Need a method to change the color of list depending on listnumber
-      const taskItem = this.#addTaskItemsToListGroupContainer(
-        task,
-        indexOfTask
-      );
+
+    for (const task of collectedTasks) {
+      const taskItem = this.#addTaskItemsToListGroupContainer(task);
       listGroupContainer.append(taskItem);
     }
+    this.#setTaskItemBackgroundColor(listGroupContainer);
   }
 
-  #addTaskItemsToListGroupContainer(task, indexOfTask) {
+  #addTaskItemsToListGroupContainer(task) {
     const taskItemContainer = createElement("div");
     taskItemContainer.classList.add("d-flex", "task-item-container");
     const aElement = createElement("a");
@@ -149,10 +141,6 @@ export class View {
       "d-flex",
       "align-items-center"
     );
-
-    indexOfTask % 2 !== 0
-      ? aElement.classList.add(taskStatus.evenNumberedTask)
-      : aElement.classList.add(taskStatus.oddNumberedTask);
 
     // this.toggleImportantTask();
 
@@ -190,6 +178,20 @@ export class View {
     taskItemContainer.append(removeTaskButton);
 
     return taskItemContainer;
+  }
+
+  #setTaskItemBackgroundColor(listGroupContainer) {
+    const allChildrenContainer = listGroupContainer.children;
+    let index = 0;
+    for (const childContainer of allChildrenContainer) {
+      const aElement = childContainer.querySelector("a");
+      if (index % 2 !== 0) {
+        aElement.classList.add(taskStatus.evenNumberedTask);
+      } else {
+        aElement.classList.add(taskStatus.oddNumberedTask);
+      }
+      index++;
+    }
   }
 
   toggleImportantTask() {
