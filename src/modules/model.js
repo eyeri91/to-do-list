@@ -1,72 +1,98 @@
 import Task from "./task.js";
 import Project from "./project.js";
+import { removeItemFromArray } from "../utils/utils.js";
+
 // import { toSentenceCase } from "../utils/utils.js";
 
-const defaultTask = new Task("Finish TypeScript course", "No date", "Personal");
-const defaultTask2 = new Task("sds", "No date", "Personal");
+const defaultTask = new Task("Finish TypeScript course", "", "Personal");
+const defaultTask2 = new Task("sds", "", "Personal");
+const defaultTaks3 = new Task("Buy cheese", "");
+const defaultTaks4 = new Task("Supermarket", "");
 const personalProject = new Project("Personal");
+const allTasksProject = new Project("All tasks");
 personalProject.addTask(defaultTask);
 personalProject.addTask(defaultTask2);
+allTasksProject.addTask(defaultTaks3);
+allTasksProject.addTask(defaultTaks4);
 
 export class Model {
   #projects;
-  #publishReturnAllTasksEvent;
+  #publishNewTaskAddedEvent;
+  #publishNewProjectAddedEvent;
   #publishReleaseTasksForChosenCategoryEvent;
   constructor(
-    publishReturnAllTasksEvent,
+    publishNewTaskAddedEvent,
+    publishNewProjectAddedEvent,
     publishReleaseTasksForChosenCategoryEvent
   ) {
     this.#projects = [];
-    this.#projects.push(personalProject);
-    this.#publishReturnAllTasksEvent = publishReturnAllTasksEvent;
+    this.#projects.push(personalProject, allTasksProject);
+    this.#publishNewTaskAddedEvent = publishNewTaskAddedEvent;
+    this.#publishNewProjectAddedEvent = publishNewProjectAddedEvent;
     this.#publishReleaseTasksForChosenCategoryEvent =
       publishReleaseTasksForChosenCategoryEvent;
   }
   // create default projects and add it to projectList
-  addNewProject(projectTitle) {
-    if (!this.#projects[projectTitle]) {
-      const newProject = new Project(projectTitle);
+  addNewProject(NewProjectObject) {
+    const isProjectAlreadyCreated = this.#projects.find(
+      (project) => project.title === NewProjectObject.title
+    );
+    if (isProjectAlreadyCreated)
+      alert("There is already a project with the same name!");
+    else {
+      const newProject = new Project(NewProjectObject.title);
       this.#projects.push(newProject);
-    } else alert("There is a project with the same name!");
+      this.#publishNewProjectAddedEvent(newProject.title);
+    }
   }
 
-  removeProject(projectTitle) {
+  removeProject(projectTitleToBeRemoved) {
     this.#projects = this.#projects.filter(
-      (project) => project.title !== projectTitle
+      (project) => project.title !== projectTitleToBeRemoved
     );
   }
 
-  addTask(task) {
+  addTask(taskObject) {
+    const newTask = new Task(
+      taskObject.title,
+      taskObject.dueDate,
+      taskObject.projectCategory
+    );
+
     for (const project of this.#projects) {
-      if (project.title === task.projectCategory) project.addTask(task);
-      else {
-        alert("There is no project category found");
-      }
+      if (project.title === newTask.projectCategory) project.addTask(newTask);
+      else continue;
     }
+
+    this.#publishNewTaskAddedEvent(this.collectTasksForChosenProjectName());
   }
 
   removeTask(task) {
-    for (const project of this.#projects) {
-      if (task.projectCategory === project.title) project.deleteTask(task);
-      else alert("There is no project category found ");
-    }
+    const matchingProject = this.#projects.find(
+      (project) => project.title === task.projectCategory
+    );
+    matchingProject.deleteTask(task);
   }
 
   collectTasksForChosenProjectName(projectName) {
     if (!projectName) {
       const allTasksFromEveryProject = [];
       for (const project of this.#projects) {
-        const allTasks = project.getAllTasks();
-        allTasksFromEveryProject.push(allTasks);
+        const allTasksFromAProject = project.getAllTasks();
+        for (const task of allTasksFromAProject) {
+          allTasksFromEveryProject.push(task);
+        }
       }
-      this.#publishReturnAllTasksEvent(allTasksFromEveryProject);
-      return;
+
+      return allTasksFromEveryProject;
     } else {
       const allTasksFromChosenProejct = [];
       for (const project of this.#projects) {
         if (project.title === projectName) {
           const allTasksOfThisCategory = project.getAllTasks();
-          allTasksFromChosenProejct.push(allTasksOfThisCategory);
+          for (const task of allTasksOfThisCategory) {
+            allTasksFromChosenProejct.push(task);
+          }
         }
       }
       this.#publishReleaseTasksForChosenCategoryEvent(

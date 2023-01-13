@@ -24,15 +24,105 @@
       <nav class="navbar navbar-expand-md bg-light ps-md-4 px-3 col-md-3">
         <div class="container-fluid">
           <div class="nav-category-container flex-nowrap">
-            <div class="home-category flex-nowrap">
+            <div
+              class="home-category d-flex flex-nowrap justify-content-between"
+            >
               <a class="navbar-brand fs-3">Home </a>
               <button
                 type="button"
-                class="btn btn-md btn-primary rounded-5 create-task-button d-none d-md-inline"
+                class="btn btn-lg border-0 text-primary"
+                id="add-task-button"
+                data-bs-toggle="modal"
+                data-bs-target="#add-task-modal"
               >
                 +
               </button>
+              <!-- Modal for a new task -->
+              <div
+                class="modal fade"
+                id="add-task-modal"
+                tabindex="-1"
+                aria-labelledby="add-task-modal-header"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1
+                        class="modal-title fs-5 flex-grow-1"
+                        id="add-task-modal-header"
+                      >
+                        Add a new task
+                      </h1>
+                      <button
+                        type="button"
+                        class="btn-close ms-3"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="input-group mb-3">
+                        <label
+                          class="input-group-text"
+                          for="project-for-new-task"
+                          >Projects</label
+                        >
+                        <select class="form-select" id="project-for-new-task">
+                          <option selected value="All tasks"></option>
+                          <option value="Personal">Personal</option>
+                          <option value="2">Two</option>
+                          <option value="3">Three</option>
+                        </select>
+                      </div>
+                      <div class="input-group mb-3">
+                        <input
+                          type="text"
+                          class="form-control"
+                          aria-label="Text
+                        input with dropdown button"
+                          placeholder="Title"
+                          id="new-task-title"
+                        />
+                      </div>
+
+                      <div class="input-group mb-3">
+                        <input type="date" class="form-control" id="task-due" />
+                      </div>
+                      <div class="form-check form-switch form-check-reverse">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="task-priority-status"
+                        />
+                        <label
+                          class="form-check-label"
+                          for="task-priority-status"
+                          >Priority</label
+                        >
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                      <button
+                        type="submit"
+                        class="btn btn-primary"
+                        id="save-task-button"
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+            <!-- Nav bar -->
             <div class="collapse navbar-collapse mb-4" id="navbarNavAltMarkup">
               <div class="navbar-nav">
                 <a class="nav-link active" aria-current="page" href="#"
@@ -46,26 +136,110 @@
               class="collapse navbar-collapse d-md-flex flex-md-column"
               id="navbarNavAltMarkup"
             >
-              <div class="projects-category flex-nowrap">
-                <a class="navbar-brand project-category fs-3">Projects</a>
+              <div
+                class="projects-category flex-nowrap d-flex justify-content-between"
+              >
+                <a class="navbar-brand project-category fs-3 me-0">Projects</a>
                 <button
                   type="button"
-                  class="btn btn-md btn-primary rounded-5 create-project-button d-none d-md-inline"
+                  class="btn btn-lg border-0 text-primary"
+                  id="add-project-button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#add-project-modal"
                 >
                   +
                 </button>
-              </div>
-              <div class="navbar-nav align-self-start">
-                <a class="nav-link active" aria-current="page" href="#"
-                  >Personal</a
+
+                <!-- Modal for a new project -->
+                <div
+                  class="modal fade"
+                  id="add-project-modal"
+                  tabindex="-1"
+                  aria-labelledby="add-project-modal-header"
+                  aria-hidden="true"
                 >
-                <a class="nav-link" href="#">Work</a>
-                <a class="nav-link" href="#">Workouts</a>
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1
+                          class="modal-title fs-5 flex-grow-1"
+                          id="add-project-modal-header"
+                        >
+                          Add a new project
+                        </h1>
+                        <button
+                          type="button"
+                          class="btn-close ms-3"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="input-group">
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="new-project-title"
+                            aria-label="Text input with dropdown button"
+                            placeholder="New project"
+                          />
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-secondary"
+                          data-bs-dismiss="modal"
+                        >
+                          Close
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-primary"
+                          id="save-project-button"
+                        >
+                          Save
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Project list -->
+              <div
+                class="navbar-nav align-self-start"
+                id="project-list-container"
+              >
+                <div
+                  class="project-item-div d-flex align-items-center justify-content-between"
+                >
+                  <a class="nav-link active" aria-current="page" href="#"
+                    >Personal</a
+                  >
+                  <button
+                    type="button"
+                    class="btn btn-lg border-0 text-danger remove-project-btn"
+                  >
+                    -
+                  </button>
+                </div>
+                <div
+                  class="project-item-div d-flex align-items-center justify-content-between"
+                >
+                  <a class="nav-link" href="#">Work</a>
+                  <button
+                    type="button"
+                    class="btn btn-lg border-0 text-danger remove-project-btn"
+                  >
+                    -
+                  </button>
+                </div>
               </div>
             </div>
           </div>
           <button
             class="navbar-toggler align-self-start"
+            id="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarNavAltMarkup"
