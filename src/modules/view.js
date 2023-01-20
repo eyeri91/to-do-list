@@ -19,6 +19,7 @@ export class View {
   #publishRemoveProjectEvent;
   #publishNewTaskEvent;
   #publishRemoveTaskEvent;
+  #publishEditTaskDetailsEvent;
   #publishSelectTaskCategory;
   #projectTitleList;
   constructor(
@@ -27,6 +28,7 @@ export class View {
     publishRemoveProjectEvent,
     publishNewTaskEvent,
     publishRemoveTaskEvent,
+    publishEditTaskDetailsEvent,
     publishSelectTaskCategory
   ) {
     this.#taskContainer = taskContainer;
@@ -35,6 +37,7 @@ export class View {
     this.#publishRemoveProjectEvent = publishRemoveProjectEvent;
     this.#publishNewTaskEvent = publishNewTaskEvent;
     this.#publishRemoveTaskEvent = publishRemoveTaskEvent;
+    this.#publishEditTaskDetailsEvent = publishEditTaskDetailsEvent;
     this.#publishSelectTaskCategory = publishSelectTaskCategory;
   }
 
@@ -152,6 +155,7 @@ export class View {
     dateButton.type = "button";
     dateButton.setAttribute("data-bs-toggle", "modal");
     dateButton.setAttribute("data-bs-target", "#add-task-modal");
+
     dateButton.classList.add(
       "btn",
       "btn-sm",
@@ -160,6 +164,7 @@ export class View {
       "fw-bold",
       "text-primary"
     );
+
     dateButton.addEventListener("click", () => {
       const modalHeading = document.getElementById("add-task-modal-header");
       modalHeading.textContent = "Edit task details";
@@ -173,6 +178,22 @@ export class View {
 
       const taskDue = document.getElementById("task-due");
       taskDue.value = task.dueDate;
+
+      const taskStatus = document.getElementById("task-priority-status");
+      taskStatus.value = task.isImportant;
+
+      const saveTaskButton = document.getElementById("save-task-button");
+      saveTaskButton.addEventListener("click", () => {
+        const editedTaskObject = {
+          title: taskTitle.value,
+          projectCategory: taskProject.value,
+          dueDate: taskDue.value,
+          isImportant: taskStatus.value,
+        };
+        // delete original task container!
+
+        this.#publishEditTaskDetailsEvent(task);
+      });
     });
     taskItemContainer.append(dateButton);
 
@@ -198,6 +219,14 @@ export class View {
 
     return taskItemContainer;
   }
+
+  // #addEditTaskModal(taskDateButton) {
+  //   taskDateButton.setAttribute("data-bs-toggle", "modal");
+  //   taskDateButton.setAttribute("data-bs-target", "#add-task-modal");
+
+  //   // create modal
+  //   const modalDiv =
+  // }
 
   #createDueDateCalendarElement(taskDueDate) {}
 
@@ -247,7 +276,6 @@ export class View {
   #removeTaskElement(taskItemContainer) {
     const listGroupContainer = document.getElementById("list-group-container");
     if (taskItemContainer.classList.contains("task-item-container")) {
-      console.log("reached");
       taskItemContainer.remove();
 
       this.#setTaskItemBackgroundColor(listGroupContainer);

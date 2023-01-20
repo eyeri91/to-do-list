@@ -37,7 +37,9 @@ export class Controller {
     this.#eventManager.subscribe("removeTask", (data) =>
       this.#model.removeTask(data)
     );
-
+    this.#eventManager.subscribe("editTaskDetails", (data) => {
+      this.#model.updateTaskDetails(data);
+    });
     this.#eventManager.subscribe("selectTaskCategory", (data) =>
       this.#model.collectTasksForChosenCategory(data)
     );
@@ -52,6 +54,7 @@ export class Controller {
       (data) => this.#eventManager.publish("removeProject", data),
       (data) => this.#eventManager.publish("newTask", data),
       (data) => this.#eventManager.publish("removeTask", data),
+      (data) => this.#eventManager.publish("editTaskDetails", data),
       (data) => this.#eventManager.publish("selectTaskCategory", data)
     );
   }

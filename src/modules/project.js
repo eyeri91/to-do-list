@@ -11,15 +11,15 @@ export default class Project {
   }
 
   deleteTask(taskToBeDeleted) {
-    this.tasks = this.tasks.filter(
-      (task) => task.title !== taskToBeDeleted.title
-    );
+    const indexOftaskToBeDeleted = this.tasks.indexOf(taskToBeDeleted);
+    this.tasks.splice(indexOftaskToBeDeleted, 1);
   }
 
   getTask(taskToBeFound) {
     const foundTask = this.tasks.find(
       (task) => task.title === taskToBeFound.title
     );
+    return foundTask;
   }
 
   getAllTasks() {

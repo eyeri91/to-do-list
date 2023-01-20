@@ -74,6 +74,13 @@ export class Model {
     matchingProject.deleteTask(task);
   }
 
+  updateTaskDetails(originalTask) {
+    const matchingProject = this.#projects.find(
+      (project) => project.title === originalTask.projectCategory
+    );
+    matchingProject.deleteTask(originalTask);
+  }
+
   collectTasksForChosenProjectName(projectName) {
     if (!projectName) {
       const allTasksFromEveryProject = [];
