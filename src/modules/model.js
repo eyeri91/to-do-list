@@ -5,7 +5,7 @@ import { removeItemFromArray } from "../utils/utils.js";
 // import { toSentenceCase } from "../utils/utils.js";
 
 const defaultTask = new Task("Finish TypeScript course", "", "Personal");
-const defaultTask2 = new Task("sds", "", "Personal");
+const defaultTask2 = new Task("sds", "2023-12-11", "Personal");
 const defaultTaks3 = new Task("Buy cheese", "");
 const defaultTaks4 = new Task("Supermarket", "");
 const personalProject = new Project("Personal");

@@ -1,14 +1,15 @@
 // import * as bootstrap from "bootstrap";
 import { toSentenceCase } from "../utils/utils.js";
 import { createElement } from "../utils/utils.js";
+import { toShorterDate } from "../utils/utils.js";
 import { v4 as uuidv4 } from "uuid";
 
 const homeTaskMenuList = ["All tasks", "Today", "This week"];
 // let projectTitleList = ["Personal"];
 
 const taskStatus = {
-  oddNumberedTask: "list-group-item",
-  evenNumberedTask: "list-group-item-dark",
+  oddNumberedTask: "bg-body-tertiary",
+  evenNumberedTask: "bg-dark-subtle",
   important: "list-group-item-warning",
   completed: "list-group-item-light",
 };
@@ -132,40 +133,38 @@ export class View {
 
   #addTaskItemsToListGroupContainer(task) {
     const taskItemContainer = createElement("div");
-    taskItemContainer.classList.add("d-flex", "task-item-container");
-    const aElement = createElement("a");
-    // aElement.setAttribute("href", "#");
-    aElement.classList.add(
-      "list-group-item",
-      "list-group-item-action",
-      "d-flex",
-      "align-items-center"
-    );
+    taskItemContainer.classList.add("d-flex", "align-items-center");
 
+    const taskTitleElement = createElement("span", task.title);
+    taskTitleElement.id = "task-title-element";
+    taskItemContainer.append(taskTitleElement);
     // this.toggleImportantTask();
 
-    const formInput = createElement("input");
-    formInput.classList.add("form-check-input", "me-1");
-    formInput.type = "checkbox";
-    formInput.value = "";
-    const formInputIdForTask = uuidv4();
-    formInput.id = formInputIdForTask;
-    aElement.append(formInput);
+    const dateButton = createElement("button");
+    !task.dueDate
+      ? (dateButton.textContent = "+")
+      : (dateButton.textContent = toShorterDate(task.dueDate));
 
-    const formLabel = createElement("label", task.title);
-    formLabel.classList.add("form-check-label", "stretched-link");
-    formLabel.htmlFor = formInputIdForTask;
-    aElement.append(formLabel);
+    dateButton.type = "button";
+    dateButton.classList.add(
+      "btn",
+      "btn-sm",
+      "border-0",
+      "ms-auto",
+      "fw-bold",
+      "text-primary"
+    );
+    taskItemContainer.append(dateButton);
 
     const removeTaskButton = createElement("button", "-");
     removeTaskButton.type = "button";
     removeTaskButton.classList.add(
       "btn",
       "btn-lg",
-      "border-0",
+      "border-1",
       "fw-bold",
       "fs-4",
-      "ms-3",
+      "ms-2",
       "p-0",
       "text-danger",
       "remove-project-btn"
@@ -174,23 +173,22 @@ export class View {
       this.#removeTaskElement(e.target.parentElement);
       this.#publishRemoveTaskEvent(task);
     });
-    taskItemContainer.append(aElement);
     taskItemContainer.append(removeTaskButton);
 
     return taskItemContainer;
   }
 
+  #createDueDateCalendarElement(taskDueDate) {}
+
   #setTaskItemBackgroundColor(listGroupContainer) {
     const allChildrenContainer = listGroupContainer.children;
     let index = 0;
     for (const childContainer of allChildrenContainer) {
-      const aElement = childContainer.querySelector("a");
-      aElement.classList.remove(taskStatus.evenNumberedTask);
-
+      childContainer.classList.remove(taskStatus.evenNumberedTask);
       if (index % 2 !== 0) {
-        aElement.classList.add(taskStatus.evenNumberedTask);
+        childContainer.classList.add(taskStatus.evenNumberedTask);
       } else {
-        aElement.classList.add(taskStatus.oddNumberedTask);
+        childContainer.classList.add(taskStatus.oddNumberedTask);
       }
       index++;
     }
