@@ -164,6 +164,10 @@ export class View {
       const modalHeading = document.getElementById("add-task-modal-header");
       modalHeading.textContent = "Edit task details";
 
+      const taskProject = document.getElementById("project-for-new-task");
+      if (task.projectCategory === "All tasks") taskProject.value = "All tasks";
+      else taskProject.value = task.projectCategory;
+
       const taskTitle = document.getElementById("new-task-title");
       taskTitle.value = task.title;
 
