@@ -133,10 +133,14 @@ export class View {
 
   #addTaskItemsToListGroupContainer(task) {
     const taskItemContainer = createElement("div");
-    taskItemContainer.classList.add("d-flex", "align-items-center");
+    taskItemContainer.classList.add(
+      "d-flex",
+      "align-items-center",
+      "task-item-container"
+    );
 
     const taskTitleElement = createElement("span", task.title);
-    taskTitleElement.id = "task-title-element";
+    taskTitleElement.classList.add("task-title-element");
     taskItemContainer.append(taskTitleElement);
     // this.toggleImportantTask();
 
@@ -162,6 +166,7 @@ export class View {
       "btn",
       "btn-lg",
       "border-1",
+      "rounded-5",
       "fw-bold",
       "fs-4",
       "ms-2",
@@ -226,7 +231,9 @@ export class View {
   #removeTaskElement(taskItemContainer) {
     const listGroupContainer = document.getElementById("list-group-container");
     if (taskItemContainer.classList.contains("task-item-container")) {
+      console.log("reached");
       taskItemContainer.remove();
+
       this.#setTaskItemBackgroundColor(listGroupContainer);
     }
   }
