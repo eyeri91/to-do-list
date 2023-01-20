@@ -150,6 +150,8 @@ export class View {
       : (dateButton.textContent = toShorterDate(task.dueDate));
 
     dateButton.type = "button";
+    dateButton.setAttribute("data-bs-toggle", "modal");
+    dateButton.setAttribute("data-bs-target", "#add-task-modal");
     dateButton.classList.add(
       "btn",
       "btn-sm",
@@ -158,6 +160,16 @@ export class View {
       "fw-bold",
       "text-primary"
     );
+    dateButton.addEventListener("click", () => {
+      const modalHeading = document.getElementById("add-task-modal-header");
+      modalHeading.textContent = "Edit task details";
+
+      const taskTitle = document.getElementById("new-task-title");
+      taskTitle.value = task.title;
+
+      const taskDue = document.getElementById("task-due");
+      taskDue.value = task.dueDate;
+    });
     taskItemContainer.append(dateButton);
 
     const removeTaskButton = createElement("button", "-");
