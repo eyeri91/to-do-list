@@ -28,10 +28,8 @@ export class Controller {
       this.#model.addTask(data);
     });
 
-    this.#eventManager.subscribe(
-      "newTaskAdded",
-      (data) => this.#view.loadRelatedProjectsTasks(data)
-      // console.log(data)
+    this.#eventManager.subscribe("newTaskAdded", (data) =>
+      this.#view.loadRelatedProjectsTasks(data)
     );
 
     this.#eventManager.subscribe("removeTask", (data) =>
@@ -40,6 +38,7 @@ export class Controller {
     this.#eventManager.subscribe("editTaskDetails", (data) => {
       this.#model.updateTaskDetails(data);
     });
+
     this.#eventManager.subscribe("selectTaskCategory", (data) =>
       this.#model.collectTasksForChosenCategory(data)
     );

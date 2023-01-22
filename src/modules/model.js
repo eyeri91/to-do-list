@@ -74,11 +74,20 @@ export class Model {
     matchingProject.deleteTask(task);
   }
 
-  updateTaskDetails(originalTask) {
+  updateTaskDetails(arrayOfOriginalTaskAndEditiedTask) {
+    const originalTask = arrayOfOriginalTaskAndEditiedTask[0];
+    const editedTask = arrayOfOriginalTaskAndEditiedTask[1];
     const matchingProject = this.#projects.find(
       (project) => project.title === originalTask.projectCategory
     );
-    matchingProject.deleteTask(originalTask);
+
+    const foundOriginalTask = matchingProject.getTask(originalTask);
+    foundOriginalTask.title = editedTask.title;
+    foundOriginalTask.dueDate = editedTask.dueDate;
+    foundOriginalTask.projectCategory = editedTask.projectCategory;
+    foundOriginalTask.isImportant = editedTask.isImportant;
+
+    return foundOriginalTask;
   }
 
   collectTasksForChosenProjectName(projectName) {

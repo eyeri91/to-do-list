@@ -16,9 +16,7 @@ export default class Project {
   }
 
   getTask(taskToBeFound) {
-    const foundTask = this.tasks.find(
-      (task) => task.title === taskToBeFound.title
-    );
+    const foundTask = this.tasks.find((task) => task.id === taskToBeFound.id);
     return foundTask;
   }
 

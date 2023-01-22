@@ -2,7 +2,6 @@
 import { toSentenceCase } from "../utils/utils.js";
 import { createElement } from "../utils/utils.js";
 import { toShorterDate } from "../utils/utils.js";
-import { v4 as uuidv4 } from "uuid";
 
 const homeTaskMenuList = ["All tasks", "Today", "This week"];
 // let projectTitleList = ["Personal"];
@@ -134,6 +133,12 @@ export class View {
     this.#setTaskItemBackgroundColor(listGroupContainer);
   }
 
+  #checkDueDate(task, dateButton) {
+    !task.dueDate
+      ? (dateButton.textContent = "+")
+      : (dateButton.textContent = toShorterDate(task.dueDate));
+  }
+
   #addTaskItemsToListGroupContainer(task) {
     const taskItemContainer = createElement("div");
     taskItemContainer.classList.add(
@@ -148,9 +153,8 @@ export class View {
     // this.toggleImportantTask();
 
     const dateButton = createElement("button");
-    !task.dueDate
-      ? (dateButton.textContent = "+")
-      : (dateButton.textContent = toShorterDate(task.dueDate));
+    taskItemContainer.append(dateButton);
+    this.#checkDueDate(task, dateButton);
 
     dateButton.type = "button";
     dateButton.setAttribute("data-bs-toggle", "modal");
@@ -185,17 +189,16 @@ export class View {
       const saveTaskButton = document.getElementById("save-task-button");
       saveTaskButton.addEventListener("click", () => {
         const editedTaskObject = {
+          id: task.id,
           title: taskTitle.value,
           projectCategory: taskProject.value,
           dueDate: taskDue.value,
           isImportant: taskStatus.value,
         };
-        // delete original task container!
-
-        this.#publishEditTaskDetailsEvent(task);
+        const arrayOfOriginalTaskAndEditiedTask = [task, editedTaskObject];
+        this.#publishEditTaskDetailsEvent(arrayOfOriginalTaskAndEditiedTask);
       });
     });
-    taskItemContainer.append(dateButton);
 
     const removeTaskButton = createElement("button", "-");
     removeTaskButton.type = "button";
@@ -360,54 +363,3 @@ export class View {
   // When screen is less than medium and the burger icon is collpased,
   // Then add those 2 buttons for Home and Projects
 }
-
-// #createDropDownMenu(projectTitleList) {
-//   this.projectTitleList = projectTitleList;
-//   // Dropdown menu container
-//   const dropdownContainer = createElement("div");
-//   dropdownContainer.classList.add("btn-group", "align-self-start", "w-25");
-//   this.#taskContainer.append(dropdownContainer);
-//   // Dropdown button
-//   const dropdownButton = createElement("button", "All tasks");
-//   dropdownContainer.append(dropdownButton);
-//   dropdownButton.type = "button";
-//   dropdownButton.classList.add(
-//     "btn",
-//     "bthn-md",
-//     "dropdown-toggle",
-//     "border-0"
-//   );
-//   dropdownButton.setAttribute("aria-expanded", false);
-//   dropdownButton.setAttribute("data-bs-toggle", "dropdown");
-//   const dropdownMenuList = createElement("ul");
-//   dropdownContainer.append(dropdownMenuList);
-//   dropdownMenuList.classList.add("dropdown-menu");
-
-//   // Dropdown menu list
-//   this.#MakeDropdownListItemsAndAppend(homeTaskMenuList, dropdownMenuList);
-//   this.#MakeDropdownListItemsAndAppend(
-//     this.projectTitleList,
-//     dropdownMenuList
-//   );
-// }
-
-// #MakeDropdownListItemsAndAppend(list, parentElement) {
-//   for (const item of list) {
-//     const li = createElement("li");
-//     if (list === projectTitleList) {
-//       li.classList.add(item.toLowerCase());
-//     }
-//     const a = createElement("a", item);
-//     a.classList.add("dropdown-item");
-//     a.setAttribute("href", "#");
-//     li.append(a);
-//     parentElement.append(li);
-//   }
-//   if (list === homeTaskMenuList) {
-//     const li = createElement("li");
-//     const hr = createElement("hr");
-//     hr.classList.add("dropdown-divider");
-//     li.append(hr);
-//     parentElement.append(li);
-//   }
-// }
